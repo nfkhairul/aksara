@@ -1,0 +1,1989 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tangga Peringkat — Pemeriksa Karangan BM Kertas 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1b1631;
+  --ink-2:#3a3160;
+  --mist:#726c93;
+  --paper:#f1eef7;
+  --card:#ffffff;
+  --line:#e2ddf0;
+  --nila:#3c2a86;        /* identiti BM */
+  --emas:#c98a10;        /* Bahagian A */
+  --hutan:#0e7c66;       /* Bahagian B */
+  --merah:#b7202e;
+  --ungu:#7a3ff2;
+  --ok:#0f9d6b;
+  --shadow:0 2px 0 rgba(27,22,49,.05), 0 16px 36px -20px rgba(27,22,49,.5);
+  --r:18px;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Plus Jakarta Sans","Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--body);color:var(--ink);background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(880px 420px at 106% -8%, rgba(201,138,16,.16), transparent 60%),
+    radial-gradient(760px 380px at -10% 2%, rgba(60,42,134,.16), transparent 62%);
+  background-attachment:fixed;
+}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,h4{font-family:var(--display);margin:0;letter-spacing:-.015em;line-height:1.1;font-weight:700}
+.mono{font-family:var(--mono)}
+
+/* ---------- rangka ---------- */
+.topbar{
+  position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:14px;
+  padding:12px 18px;background:rgba(255,255,255,.85);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto;min-width:0}
+.brand b{font-family:var(--display);font-size:18px;letter-spacing:-.02em;white-space:nowrap}
+.brand small{display:block;font-size:10.5px;color:var(--mist);letter-spacing:.16em;text-transform:uppercase}
+.nav{display:flex;gap:6px}
+.nav button{
+  border:1px solid transparent;background:transparent;border-radius:999px;
+  padding:9px 15px;font-size:14px;font-weight:600;color:var(--mist);cursor:pointer;transition:.16s;
+}
+.nav button:hover{color:var(--ink);background:#fff}
+.nav button[aria-current="true"]{background:var(--nila);color:#fff}
+.who{display:flex;align-items:center;gap:9px;padding-left:6px;border-left:1px solid var(--line)}
+.avatar{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-family:var(--display);
+  font-size:14px;color:#fff;background:linear-gradient(140deg,var(--nila),var(--emas))}
+.who span{font-size:12px;color:var(--mist);max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+main{max-width:1140px;margin:0 auto;padding:26px 18px 90px}
+.view{display:none;animation:rise .32s cubic-bezier(.2,.8,.3,1)}
+.view.on{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ---------- asas ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.pad{padding:20px}
+.grid{display:grid;gap:16px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mist)}
+.btn{
+  border:0;border-radius:13px;padding:13px 20px;font-weight:600;font-size:15px;cursor:pointer;
+  background:var(--nila);color:#fff;transition:.16s;display:inline-flex;align-items:center;gap:9px;
+}
+.btn:hover{transform:translateY(-1px);box-shadow:0 12px 24px -14px rgba(27,22,49,.9)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.tone{background:linear-gradient(120deg,var(--nila),var(--emas))}
+.btn.sm{padding:9px 14px;font-size:13.5px;border-radius:11px}
+.btn.danger{background:#fff;color:#a81c28;border:1px solid #f0cdca}
+label.f{display:block;margin-bottom:14px}
+label.f > span{display:block;font-size:12.5px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
+input[type=text],input[type=email],select,textarea{
+  width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fbfaff;transition:.16s
+}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--nila);box-shadow:0 0 0 4px rgba(60,42,134,.14);background:#fff}
+:focus-visible{outline:3px solid var(--emas);outline-offset:2px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 13px;font-size:13px;cursor:pointer;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--nila);color:#fff;border-color:var(--nila)}
+.hint{font-size:12.5px;color:var(--mist);line-height:1.55}
+
+/* ---------- log masuk ---------- */
+.gate{max-width:1040px;margin:0 auto;padding:30px 18px;display:grid;gap:26px;grid-template-columns:1.05fr .95fr;align-items:center;min-height:100vh}
+@media(max-width:860px){.gate{grid-template-columns:1fr;min-height:auto;padding-top:22px}}
+.gate h1{font-size:clamp(34px,6vw,56px);line-height:1}
+.gate h1 em{font-style:italic;color:var(--emas)}
+.gate p.lede{color:var(--ink-2);font-size:16px;line-height:1.65;max-width:48ch}
+.marks{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.marks div{font-family:var(--mono);font-size:12px;padding:7px 11px;border-radius:9px;background:#fff;border:1px solid var(--line)}
+
+/* ---------- tangga peringkat ---------- */
+.tanggawrap{background:linear-gradient(180deg,#fff,#faf8ff);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+
+/* ---------- statistik ---------- */
+.tiles{display:grid;gap:14px;grid-template-columns:repeat(4,1fr)}
+@media(max-width:820px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{padding:16px;border-radius:16px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.tile b{display:block;font-family:var(--display);font-size:32px;letter-spacing:-.03em;margin-top:4px}
+.tile i{position:absolute;right:-14px;bottom:-18px;width:78px;height:78px;border-radius:50%;opacity:.13}
+.two{display:grid;grid-template-columns:1.35fr 1fr;gap:16px}
+@media(max-width:900px){.two{grid-template-columns:1fr}}
+
+/* ---------- jadual ---------- */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--mist);padding:10px 12px;border-bottom:1px solid var(--line)}
+td{padding:12px;border-bottom:1px solid #f4f1fb}
+tbody tr{cursor:pointer;transition:.12s}
+tbody tr:hover{background:#faf8ff}
+.pill{display:inline-block;font-family:var(--mono);font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:8px}
+
+/* ---------- rakaman ---------- */
+.steps{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.step{flex:1;min-width:130px;padding:11px 13px;border-radius:13px;border:1px solid var(--line);background:#fff;font-size:13px;font-weight:600;color:var(--mist);display:flex;align-items:center;gap:9px}
+.step u{font-family:var(--mono);width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:var(--paper);font-size:11px;text-decoration:none}
+.step.now{color:#fff;background:var(--nila);border-color:var(--nila)}
+.step.now u{background:rgba(255,255,255,.2)}
+.step.done{color:var(--ok);border-color:#bfe5d5;background:#f2fbf7}
+.drop{border:2px dashed #cdc6e6;border-radius:16px;padding:20px;text-align:center;background:#fbfaff;transition:.16s}
+.drop.has{border-style:solid;border-color:var(--ok);background:#f4fbf8}
+.shots{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.shot{position:relative;width:92px;height:92px;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.shot img{width:100%;height:100%;object-fit:cover;display:block}
+.shot button{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:7px;border:0;background:rgba(27,22,49,.78);color:#fff;cursor:pointer;font-size:13px;line-height:1}
+.partcard{border-top:5px solid var(--c)}
+@media(max-width:700px){#dropGrid,.resgrid{grid-template-columns:1fr!important}}
+
+/* ---------- paparan markah ---------- */
+.scorerow{display:grid;grid-template-columns:118px 1fr 40px;gap:12px;align-items:center;margin-bottom:11px}
+.meter{height:12px;border-radius:999px;background:#efebf9;overflow:hidden}
+.meter i{display:block;height:100%;border-radius:999px;transition:width .8s cubic-bezier(.2,.8,.3,1)}
+.scorerow b{font-family:var(--mono);font-size:17px;text-align:right}
+.big{font-family:var(--display);font-size:52px;letter-spacing:-.035em;line-height:1}
+.big small{font-size:18px;color:var(--mist);letter-spacing:0}
+
+.accordion{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:10px}
+.accordion summary{padding:13px 15px;cursor:pointer;font-weight:600;font-size:14px;list-style:none;display:flex;align-items:center;gap:10px;background:#fbfaff}
+.accordion summary::-webkit-details-marker{display:none}
+.accordion .body{padding:0 15px 15px;font-size:14px;line-height:1.65;color:var(--ink-2)}
+.quote{background:#fbfaff;border-left:3px solid var(--line);padding:8px 12px;border-radius:0 10px 10px 0;font-size:13.5px;margin:8px 0}
+
+ul.tick{list-style:none;padding:0;margin:0}
+ul.tick li{padding:8px 0 8px 26px;position:relative;font-size:14px;line-height:1.6;border-bottom:1px solid #f4f1fb}
+ul.tick li:before{content:"";position:absolute;left:4px;top:15px;width:8px;height:8px;border-radius:3px;background:var(--b,var(--nila))}
+ul.tick li:last-child{border-bottom:0}
+
+.week{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff}
+.week h4{font-size:15px;margin-bottom:8px}
+
+.tanda{display:grid;grid-template-columns:64px 1fr;gap:8px 12px;font-size:13.5px;align-items:baseline}
+.tanda b{font-family:var(--mono);font-size:15px;color:var(--merah)}
+
+/* ---------- lain-lain ---------- */
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(140%);background:var(--ink);color:#fff;
+  padding:13px 20px;border-radius:14px;font-size:14px;z-index:90;transition:.3s;box-shadow:0 20px 40px -20px #000;max-width:90vw}
+.toast.on{transform:translateX(-50%)}
+.spin{width:17px;height:17px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.working{display:flex;align-items:center;gap:12px;padding:15px;border-radius:14px;background:linear-gradient(120deg,rgba(60,42,134,.1),rgba(201,138,16,.12));border:1px solid var(--line);font-size:14px;font-weight:500}
+.empty{text-align:center;padding:48px 20px;color:var(--mist)}
+.empty b{display:block;font-family:var(--display);font-size:20px;color:var(--ink);margin-bottom:8px}
+@media print{
+  .topbar,.nav,.noprint{display:none!important}
+  body{background:#fff}
+  .card{box-shadow:none;break-inside:avoid}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div id="gate">
+  <div class="gate">
+    <div>
+      <div class="eyebrow">SPM 1103/1 &nbsp;·&nbsp; Bahasa Melayu Kertas 1</div>
+      <h1 style="margin:14px 0">Periksa karangan.<br><em>Kemudian tutup jurangnya.</em></h1>
+      <p class="lede">Rakam gambar karangan Bahagian A dan Bahagian B, dan aplikasi ini memeriksanya secara holistik mengikut peringkat dan kriteria dalam skema pemarkahan — Tema/Tugasan, Idea, Bahasa dan Pengolahan. Anda dapat peringkat, markah, bukti daripada karangan itu sendiri, dan pelan intervensi yang boleh dimulakan minggu ini.</p>
+      <div class="marks">
+        <div>Bahagian A · 30 markah</div><div>Bahagian B · 70 markah</div><div>Jumlah 100 markah</div><div>Pemeriksaan holistik</div>
+      </div>
+    </div>
+    <div class="card pad" style="border-radius:22px">
+      <h2 style="font-size:23px">Log masuk DELIMa</h2>
+      <p class="hint" style="margin:8px 0 18px">Guna akaun Google guru anda (@moe-dl.edu.my). Nama dan e-mel disimpan pada peranti ini sahaja dan akan tertera pada setiap laporan.</p>
+      <label class="f"><span>E-mel DELIMa / Google</span><input type="email" id="gEmail" placeholder="cikgu@moe-dl.edu.my" autocomplete="email"></label>
+      <label class="f"><span>Nama anda</span><input type="text" id="gName" placeholder="cth. Khairul Hafizi"></label>
+      <label class="f"><span>Sekolah</span><input type="text" id="gSchool" placeholder="cth. SMK RPS Betau"></label>
+      <button class="btn tone" id="gGo" style="width:100%;justify-content:center">Log masuk</button>
+      <p class="hint" id="gNote" style="margin-top:14px"></p>
+    </div>
+  </div>
+</div>
+
+<div id="app" style="display:none">
+<header class="topbar">
+  <div class="brand">
+    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="11" fill="#3c2a86"/><rect x="8" y="21" width="18" height="4" rx="2" fill="#c98a10"/><rect x="8" y="14.5" width="18" height="4" rx="2" fill="#e8d9a8"/><rect x="8" y="8" width="18" height="4" rx="2" fill="#ffffff"/></svg>
+    <div><b>Tangga Peringkat</b><small>BM Kertas 1 · 1103/1</small></div>
+  </div>
+  <nav class="nav">
+    <button data-go="home" aria-current="true">Utama</button>
+    <button data-go="mark">Periksa karangan</button>
+    <button data-go="settings">Simpanan</button>
+  </nav>
+  <div class="who"><div class="avatar" id="tAv">?</div><span id="tName"></span></div>
+</header>
+
+<main>
+  <section class="view on" id="v-home"></section>
+  <section class="view" id="v-mark"></section>
+  <section class="view" id="v-report"></section>
+  <section class="view" id="v-practice"></section>
+  <section class="view" id="v-settings"></section>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+/* =====================================================================
+   Tangga Peringkat — pemeriksa karangan SPM Bahasa Melayu Kertas 1
+   Peringkat, julat markah dan kriteria diambil daripada Cadangan Skema
+   Peperiksaan Percubaan SPM 1103/1 (2026).
+   ===================================================================== */
+
+/* ---------- simpanan ---------- */
+const mem = {};
+const IN_ARTIFACT = (typeof window.storage !== 'undefined' && window.storage !== null);
+const LS_OK = (()=>{ try{ localStorage.setItem('__tp','1'); localStorage.removeItem('__tp'); return true; }catch(e){ return false; } })();
+const store = {
+  async get(k){
+    if(IN_ARTIFACT){ try{ const r = await window.storage.get(k); if(r) return JSON.parse(r.value); }catch(e){} }
+    if(LS_OK){ try{ const v = localStorage.getItem(k); if(v!==null) return JSON.parse(v); }catch(e){} }
+    return mem[k] ?? null;
+  },
+  async set(k,v){
+    mem[k]=v;
+    if(LS_OK){ try{ localStorage.setItem(k, JSON.stringify(v)); }
+      catch(e){ toast('Ruang simpanan pelayar sudah penuh. Muat turun sandaran, kemudian padam beberapa rekod lama.',5000); } }
+    if(IN_ARTIFACT){ try{ await window.storage.set(k, JSON.stringify(v)); }catch(e){} }
+  }
+};
+const K_T='bm1:guru', K_R='bm1:rekod', K_E='bm1:enjin';
+let ENGINE='claude';
+let KEYS={anthropic:'',gemini:''};
+let GMODEL='gemini-3.6-flash';
+const engineReady=()=> ENGINE==='manual' || (ENGINE==='claude' ? (IN_ARTIFACT||!!KEYS.anthropic) : !!KEYS.gemini);
+
+let TEACHER=null, RECORDS=[], CURRENT=null, VIEW='home';
+
+/* ---------- pembantu ---------- */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const avg=a=>a.length? a.reduce((x,y)=>x+y,0)/a.length : 0;
+const r1=n=>Math.round(n*10)/10;
+function toast(msg,ms=2800){const t=$('#toast');t.textContent=msg;t.classList.add('on');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('on'),ms);}
+
+/* ---------- empat aspek yang diperiksa ---------- */
+const ASPEK=[
+  {k:'tema',      nama:'Tema / Tugasan', pendek:'Tema', c:'var(--ungu)'},
+  {k:'idea',      nama:'Idea',           pendek:'Idea', c:'var(--nila)'},
+  {k:'bahasa',    nama:'Bahasa',         pendek:'Bhs',  c:'var(--emas)'},
+  {k:'pengolahan',nama:'Pengolahan',     pendek:'Olah', c:'var(--hutan)'}
+];
+
+const BAHAGIAN=[
+  {n:1,key:'ba',label:'Bahagian A · Karangan Bahan Rangsangan',pendek:'Bahagian A',
+   tugas:'karangan berdasarkan bahan rangsangan',panjang:'lebih kurang 200 patah perkataan',
+   max:30,colour:'var(--emas)'},
+  {n:2,key:'bb',label:'Bahagian B · Karangan Respons Terbuka',pendek:'Bahagian B',
+   tugas:'karangan respons terbuka',panjang:'lebih daripada 350 patah perkataan',
+   max:70,colour:'var(--hutan)'}
+];
+
+/* ---------- peringkat dan julat markah (skema 1103/1) ---------- */
+const PERINGKAT={
+ ba:[
+  {k:'cemerlang', nama:'Cemerlang',                                lo:26,hi:30,sub:[[28,30],[26,27]],c:'#0f9d6b'},
+  {k:'kepujian',  nama:'Kepujian',                                 lo:20,hi:25,sub:[[23,25],[20,22]],c:'#1f7fd6'},
+  {k:'memuaskan', nama:'Memuaskan',                                lo:15,hi:19,sub:[[17,19],[15,16]],c:'#c98a10'},
+  {k:'minimum',   nama:'Penguasaan Minimum',                       lo:10,hi:14,sub:[[12,14],[10,11]],c:'#e2762c'},
+  {k:'tmtpm',     nama:'Tidak Mencapai Tahap Penguasaan Minimum',  lo:1, hi:9, sub:[[6,9],[1,5]],   c:'#b7202e'}
+ ],
+ bb:[
+  {k:'cemerlang', nama:'Cemerlang',                                lo:64,hi:70,sub:[[68,70],[64,67]],c:'#0f9d6b'},
+  {k:'kepujian',  nama:'Kepujian',                                 lo:55,hi:63,sub:[[59,63],[55,58]],c:'#1f7fd6'},
+  {k:'baik',      nama:'Baik',                                     lo:45,hi:54,sub:[[50,54],[45,49]],c:'#6c5ce7'},
+  {k:'memuaskan', nama:'Memuaskan',                                lo:35,hi:44,sub:[[40,44],[35,39]],c:'#c98a10'},
+  {k:'minimum',   nama:'Penguasaan Minimum',                       lo:21,hi:34,sub:[[28,34],[21,27]],c:'#e2762c'},
+  {k:'tmtpm',     nama:'Tidak Mencapai Tahap Penguasaan Minimum',  lo:1, hi:20,sub:[[11,20],[1,10]], c:'#b7202e'}
+ ]
+};
+const pInfo=(bhg,k)=>PERINGKAT[bhg].find(p=>p.k===k)||PERINGKAT[bhg][PERINGKAT[bhg].length-1];
+function peringkatDaripadaMarkah(bhg,m){
+  const list=PERINGKAT[bhg];
+  return (list.find(p=>m>=p.lo&&m<=p.hi)||list[list.length-1]).k;
+}
+/* aspek 1-5 lalai bagi setiap peringkat */
+const ASPEK_LALAI={ba:{cemerlang:5,kepujian:4,memuaskan:3,minimum:2,tmtpm:1},
+                   bb:{cemerlang:5,kepujian:4,baik:4,memuaskan:3,minimum:2,tmtpm:1}};
+
+/* ---------- kriteria penskoran, mengikut skema ---------- */
+const KRITERIA={
+ ba:{
+  cemerlang:{tema:'Karangan menepati tema bahan rangsangan/tugasan.',
+   idea:'Idea relevan dengan tema bahan rangsangan/tugasan. Huraian jelas dan matang.',
+   bahasa:'Bahasa gramatis dari segi kata dan ayat. Kosa kata luas dan tepat. Unsur bahasa bervariasi. Ungkapan menarik yang sesuai dan tepat. Ejaan betul mengikut Sistem Ejaan Rumi Baharu. Tanda baca betul dan tepat.',
+   pengolahan:'Pengolahan menarik dan berkesan. Laras bahasa sesuai mengikut tugasan. Wacana lengkap. Pemerengganan sesuai.'},
+  kepujian:{tema:'Karangan menepati tema bahan rangsangan/tugasan.',
+   idea:'Idea relevan dengan tema bahan rangsangan/tugasan. Huraian jelas.',
+   bahasa:'Bahasa gramatis dari segi kata dan ayat. Kosa kata luas. Unsur bahasa bervariasi. Ejaan betul mengikut Sistem Ejaan Rumi Baharu. Tanda baca betul dan tepat.',
+   pengolahan:'Pengolahan menarik. Laras bahasa sesuai mengikut tugasan. Wacana lengkap. Pemerengganan sesuai.'},
+  memuaskan:{tema:'Karangan masih menepati bahan rangsangan/tugasan.',
+   idea:'Idea masih relevan dengan tema bahan rangsangan/tugasan. Huraian masih jelas.',
+   bahasa:'Bahasa masih gramatis. Kosa kata masih luas/terhad. Unsur bahasa masih bervariasi. Ejaan masih mengikut Sistem Ejaan Rumi Baharu tetapi terdapat kesalahan ejaan yang ketara. Tanda baca masih betul dan tepat.',
+   pengolahan:'Pengolahan masih menarik. Laras bahasa masih sesuai. Wacana masih lengkap. Pemerengganan masih sesuai.'},
+  minimum:{tema:'Karangan kurang menepati bahan rangsangan/tugasan.',
+   idea:'Idea kurang relevan dengan tema bahan rangsangan/tugasan. Huraian kurang jelas.',
+   bahasa:'Bahasa kurang gramatis. Kesalahan tatabahasa ketara. Kosa kata terhad. Unsur bahasa kurang bervariasi. Terdapat kesalahan ejaan yang ketara.',
+   pengolahan:'Pengolahan kurang menarik. Laras bahasa kurang sesuai. Wacana kurang lengkap. Pemerengganan kurang sesuai.'},
+  tmtpm:{tema:'Idea tidak menepati tema bahan rangsangan/tugasan.',
+   idea:'Calon tidak menunjukkan penguasaan kemahiran menulis.',
+   bahasa:'Banyak kesalahan bahasa dari segi kata dan ayat.',
+   pengolahan:'Pengolahan tidak menunjukkan penguasaan kemahiran menulis.'}
+ },
+ bb:{
+  cemerlang:{tema:'Karangan menjawab tugasan.',
+   idea:'Idea relevan mengikut tugasan. Huraian jelas dan matang. Contoh yang sesuai.',
+   bahasa:'Pelbagai jenis ayat yang gramatis. Pelbagai jenis kata yang luas dan tepat. Kosa kata luas dan tepat. Ejaan dan tanda baca betul. Unsur bahasa bervariasi. Gaya bahasa amat menarik dari segi keindahan bahasa dan penggunaan ungkapan seperti peribahasa, pantun, cogan kata atau frasa.',
+   pengolahan:'Pengolahan sangat menarik dan berkesan. Pemerengganan sesuai. Wacana lengkap dan terdapat kesinambungan idea yang jelas antara perenggan. Laras bahasa sesuai mengikut tugasan.'},
+  kepujian:{tema:'Karangan menjawab tugasan.',
+   idea:'Idea relevan mengikut tugasan. Huraian jelas. Contoh yang sesuai.',
+   bahasa:'Pelbagai jenis ayat yang gramatis tetapi terdapat kesalahan yang minimum. Pelbagai jenis kata yang tepat. Kosa kata luas dan tepat. Ejaan dan tanda baca betul. Unsur bahasa masih bervariasi. Gaya bahasa menarik dari segi keindahan bahasa dan penggunaan ungkapan.',
+   pengolahan:'Pengolahan menarik dan berkesan. Pemerengganan sesuai. Wacana lengkap dan terdapat kesinambungan idea yang jelas antara perenggan. Laras bahasa sesuai mengikut tugasan.'},
+  baik:{tema:'Karangan masih menjawab tugasan.',
+   idea:'Idea masih relevan mengikut tugasan. Huraian masih jelas. Contoh masih sesuai.',
+   bahasa:'Pelbagai jenis ayat yang gramatis tetapi terdapat kesalahan yang minimum. Pelbagai jenis kata yang sesuai. Kosa kata umum. Ejaan dan tanda baca masih betul. Unsur bahasa masih bervariasi. Gaya bahasa menarik tetapi penggunaan ungkapan kurang berkesan.',
+   pengolahan:'Pengolahan masih menarik. Pemerengganan masih sesuai. Wacana masih lengkap. Laras bahasa sesuai mengikut tugasan.'},
+  memuaskan:{tema:'Karangan masih/kurang menjawab tugasan.',
+   idea:'Idea masih relevan mengikut tugasan. Huraian kurang jelas. Contoh kurang sesuai.',
+   bahasa:'Ayat kurang gramatis. Pelbagai jenis kata terhad. Kosa kata umum dan terhad. Ejaan dan tanda baca betul tetapi terdapat kesalahan yang minimum. Unsur bahasa kurang bervariasi. Gaya bahasa kurang menarik.',
+   pengolahan:'Pengolahan kurang menarik. Pemerengganan kurang sesuai. Wacana masih/kurang lengkap. Laras bahasa kurang sesuai mengikut tugasan.'},
+  minimum:{tema:'Karangan kurang menjawab tugasan.',
+   idea:'Idea masih relevan/bercampur aduk. Huraian tidak jelas/tidak berkembang. Contoh tidak sesuai.',
+   bahasa:'Ayat tidak gramatis tetapi masih difahami. Penggunaan kata kurang tepat. Kosa kata umum dan terhad. Terdapat kesalahan ejaan dan tanda baca yang ketara. Unsur bahasa tidak bervariasi. Gaya bahasa lemah.',
+   pengolahan:'Pengolahan tidak menarik. Pemerengganan tidak sesuai/tidak seimbang. Wacana tidak lengkap.'},
+  tmtpm:{tema:'Keseluruhan karangan sukar/tidak difahami.',
+   idea:'Idea tidak relevan/bercampur aduk, huraian tidak jelas/tidak berkembang serta contoh tidak sesuai.',
+   bahasa:'Keseluruhannya menunjukkan penggunaan kata dan ayat yang tidak gramatis. Terdapat kesalahan ejaan dan tanda baca yang ketara.',
+   pengolahan:'Pengolahan tidak menarik. Pemerengganan tidak sesuai dan tidak seimbang. Wacana tidak lengkap.'}
+ }
+};
+
+/* ---------- gred SPM ---------- */
+const GRED=[[90,'A+','#0f9d6b'],[80,'A','#0f9d6b'],[70,'A-','#1f7fd6'],[65,'B+','#1f7fd6'],[60,'B','#6c5ce7'],
+            [55,'C+','#c98a10'],[50,'C','#c98a10'],[45,'D','#e2762c'],[40,'E','#e2762c'],[0,'G','#b7202e']];
+const gredOf=t=>GRED.find(g=>t>=g[0])||GRED[GRED.length-1];
+
+/* ---------- soalan sebenar daripada skema PPC 2026 ---------- */
+const SKEMA={
+ rujukan:'Cadangan Skema · Peperiksaan Percubaan SPM 1103/1 (2026)',
+ ba:{tema:'Pencemaran plastik',
+  tugasan:'Usaha/langkah/cara/strategi untuk mengatasi pencemaran plastik di Malaysia',
+  idea:['Bahan 1 — maklumat untuk pendahuluan','Bahan 2 — kempen hentikan pencemaran plastik','Bahan 3 — mengamalkan amalan kitar semula'],
+  ungkapan:['Bersatu teguh, bercerai roboh','Berat sama dipikul, ringan sama dijinjing','Bagai aur dengan tebing','Hendak seribu daya, tak hendak seribu dalih']},
+ bb:[
+  {n:1,tema:'Amalan membaca',
+   tugasan:'Manfaat-manfaat yang diperoleh murid apabila menjadikan amalan membaca sebagai hobi dalam kehidupan seharian',
+   idea:['Menambah ilmu pengetahuan','Meningkatkan kemahiran bahasa','Meningkatkan daya pemikiran','Mengisi masa lapang dengan aktiviti berfaedah'],
+   ungkapan:['Melentur buluh biarlah dari rebungnya','Tak kenal maka tak cinta','Membaca jambatan ilmu','Kalau tidak dipecahkan ruyung, manakan dapat sagunya']},
+  {n:2,tema:'Makanan warisan',
+   tugasan:'Usaha-usaha untuk mempopularkan makanan warisan',
+   idea:['Mengadakan festival dan karnival makanan','Promosi melalui media massa dan media sosial','Memasukkan elemen makanan warisan dalam pendidikan','Menggalakkan pengusaha muda menceburi bidang kuliner tradisional','Mempromosikan makanan warisan di peringkat antarabangsa'],
+   ungkapan:['Tak lapuk dek hujan, tak lekang dek panas','Biar mati anak, jangan mati adat','Di mana bumi dipijak, di situ langit dijunjung','Sambil menyelam minum air']},
+  {n:3,tema:'Ketagihan gajet',
+   tugasan:'Kesan-kesan ketagihan gajet dalam kalangan remaja',
+   idea:['Menjejaskan prestasi akademik','Masalah kesihatan fizikal','Gangguan kesihatan mental','Hubungan sosial terjejas','Gangguan pola tidur'],
+   ungkapan:['Bagai aur dengan tebing','Mati semut kerana gula','Masa itu emas','Seperti kera mendapat bunga','Sediakan payung sebelum hujan']},
+  {n:4,tema:'Gejala rasuah',
+   tugasan:'Faktor-faktor gejala rasuah berleluasa dalam kalangan masyarakat',
+   idea:['Kurangnya penghayatan nilai agama dan moral','Sikap tamak dan mementingkan diri','Kelemahan penguatkuasaan undang-undang','Tekanan ekonomi dan kos sara hidup','Budaya dan persepsi masyarakat','Kurangnya ketelusan dalam pentadbiran'],
+   ungkapan:['Seperti anjing dengan bayang-bayang','Besar pasak daripada tiang','Ikan busuk bermula dari kepalanya','Harapkan pagar, pagar makan padi','Gelap mata']}
+ ]
+};
+
+/* ---------- skala untuk enjin pemeriksaan ---------- */
+function skalaTeks(bhgKey){
+  const b=BAHAGIAN.find(x=>x.key===bhgKey);
+  return `SKALA ${b.pendek.toUpperCase()} (${b.max} MARKAH) — peringkat, julat markah dan kriteria:\n`+
+    PERINGKAT[bhgKey].map(p=>{
+      const k=KRITERIA[bhgKey][p.k];
+      return `${p.nama.toUpperCase()} (${p.lo}-${p.hi}; julat atas ${p.sub[0][0]}-${p.sub[0][1]}, julat bawah ${p.sub[1][0]}-${p.sub[1][1]})
+  Tema/Tugasan: ${k.tema}
+  Idea: ${k.idea}
+  Bahasa: ${k.bahasa}
+  Pengolahan: ${k.pengolahan}`;
+    }).join('\n\n');
+}
+
+const PERATURAN=`CARA PEMERIKSA MENGGUNAKAN SKALA INI:
+- Pemeriksaan dijalankan secara HOLISTIK. Tentukan peringkat dahulu berdasarkan kesan keseluruhan karangan, kemudian tentukan markah dalam julat peringkat itu.
+- Julat atas diberikan apabila karangan memenuhi hampir semua kriteria peringkat itu; julat bawah apabila karangan baru sahaja mencapai peringkat itu atau ada kriteria yang tidak dipenuhi.
+- Karangan boleh kuat pada satu aspek dan lemah pada aspek lain. Nyatakan kedudukan setiap aspek, tetapi markah akhir tetap satu keputusan holistik.
+- Tema/Tugasan dinilai dari segi ketepatan menjawab tugasan sahaja, bukan mutu bahasa. Calon yang menulis dengan bahasa indah tetapi tersasar daripada tugasan kehilangan markah di sini.
+- Idea dinilai dari segi kerelevanan, kejelasan huraian dan kesesuaian contoh. Isi yang disenaraikan tanpa huraian tidak sama nilainya dengan isi yang dihurai.
+- Bahasa merangkumi tatabahasa (kata dan ayat), kepelbagaian jenis ayat, kosa kata, ejaan mengikut Sistem Ejaan Rumi Baharu, dan tanda baca.
+- Pengolahan merangkumi pemerengganan, kesinambungan idea antara perenggan, kelengkapan wacana (pendahuluan, isi, penutup) dan laras bahasa.
+- Penggunaan ungkapan menarik — peribahasa, pantun, cogan kata, frasa menarik, petikan ucapan, kata-kata hikmat, petikan hadis atau maksud ayat al-Quran — hanya menaikkan peringkat apabila digunakan dengan tepat dan sesuai. Ungkapan yang salah maksud atau dipaksakan tidak diberi kredit.
+- Bezakan kesalahan yang berulang (rumus yang belum dikuasai) daripada kesilapan sekali sahaja.
+- Panjang karangan bukan kriteria pemarkahan. Kesannya hanya secara tidak langsung: karangan yang terlalu pendek tidak dapat menunjukkan kepelbagaian bahasa dan huraian.
+- Calon yang lemah tetap diberi kredit atas apa yang mampu dilakukannya. Jangan menghukum.`;
+
+const KONTEKS=`Calon ialah murid Tingkatan 5 di sekolah menengah Malaysia. Sebahagiannya bersekolah di kawasan luar bandar dan pedalaman, termasuk murid Orang Asli Semai, dan bahasa Melayu bukan bahasa pertama mereka. Periksa karangan dengan tegas mengikut skema, tetapi tuliskan semua maklum balas supaya guru boleh bertindak dengannya dalam kelas yang terhad masa dan sumber. Gunakan bahasa Melayu baku sepenuhnya.`;
+
+/* ---------- laluan ---------- */
+function go(v){
+  VIEW=v;
+  $$('.view').forEach(s=>s.classList.toggle('on', s.id==='v-'+v));
+  $$('.nav button').forEach(b=>b.setAttribute('aria-current', String(b.dataset.go===v)));
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(v==='home') drawHome();
+  if(v==='settings') drawSettings();
+}
+$$('.nav button').forEach(b=>b.onclick=()=>{
+  if(b.dataset.go==='mark'){ newSession(); } else go(b.dataset.go);
+});
+
+/* ---------- log masuk ---------- */
+async function boot(){
+  TEACHER = await store.get(K_T);
+  RECORDS = (await store.get(K_R)) || [];
+  const cfg = await store.get(K_E);
+  if(cfg){ ENGINE=cfg.engine||'claude'; KEYS={anthropic:'',gemini:'',...(cfg.keys||{})}; GMODEL=cfg.model||GMODEL; }
+  if(!IN_ARTIFACT && !cfg) ENGINE='manual';
+  if(TEACHER){ enter(); }
+  $('#gNote').innerHTML='Aplikasi ini berjalan di dalam Claude, yang tidak dapat membuka tetingkap log masuk Google, jadi ia tidak membaca Drive anda secara terus. Semua rekod disimpan pada peranti ini — guna <b>Simpanan</b> untuk memuat turun fail yang boleh anda letakkan dalam Drive DELIMa dan pulihkan pada peranti lain.';
+}
+$('#gGo').onclick=async()=>{
+  const email=$('#gEmail').value.trim(), name=$('#gName').value.trim(), school=$('#gSchool').value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return toast('Masukkan alamat e-mel yang sah, cth. cikgu@moe-dl.edu.my');
+  if(!name) return toast('Isikan nama anda supaya tertera pada laporan');
+  TEACHER={email,name,school:school||'—',since:new Date().toISOString()};
+  await store.set(K_T,TEACHER);
+  enter(); toast('Selamat datang, '+name.split(' ')[0]+'!');
+};
+$('#gEmail').addEventListener('keydown',e=>{if(e.key==='Enter')$('#gName').focus()});
+$('#gSchool').addEventListener('keydown',e=>{if(e.key==='Enter')$('#gGo').click()});
+
+function enter(){
+  $('#gate').style.display='none'; $('#app').style.display='block';
+  $('#tName').textContent=TEACHER.name;
+  $('#tAv').textContent=TEACHER.name.trim().slice(0,1).toUpperCase();
+  go('home');
+}
+async function saveRecords(){ await store.set(K_R,RECORDS); }
+
+/* ---------- pengiraan rekod ---------- */
+const markahBhg=(r,key)=>r.parts?.[key]?.markah ?? null;
+function recTotal(r){ return BAHAGIAN.reduce((t,b)=>t+(markahBhg(r,b.key)||0),0); }
+function recPeratus(r){
+  const ada=BAHAGIAN.filter(b=>markahBhg(r,b.key)!=null);
+  if(!ada.length) return 0;
+  const max=ada.reduce((t,b)=>t+b.max,0);
+  return recTotal(r)/max*100;
+}
+function aspekAvg(r,k){
+  const vals=BAHAGIAN.map(b=>r.parts?.[b.key]?.aspek?.[k]).filter(v=>typeof v==='number');
+  return avg(vals);
+}
+
+/* =====================================================================
+   KOMPONEN TANDA TANGAN — TANGGA PERINGKAT
+   Kedua-dua bahagian diletakkan pada satu paksi peratus, supaya guru
+   nampak sekaligus bahawa "Cemerlang" di Bahagian B bermula jauh lebih
+   tinggi (91%) berbanding Bahagian A (87%).
+   ===================================================================== */
+function tangga(pos,{h=340,legend=true}={}){
+  const w=320, top=26, bot=h-26, H=bot-top;
+  const y=pc=>bot-(Math.max(0,Math.min(100,pc))/100)*H;
+  const cols=[{x:96,w:98,key:'ba',t:'Bhg A',c:'var(--emas)'},{x:206,w:98,key:'bb',t:'Bhg B',c:'var(--hutan)'}];
+  let s=`<svg viewBox="0 0 ${w} ${h}" width="100%" role="img" aria-label="Tangga peringkat">`;
+  [0,20,40,60,80,100].forEach(t=>{
+    s+=`<line x1="60" y1="${y(t)}" x2="${w-6}" y2="${y(t)}" stroke="#eee9f8"/>`
+      +`<text x="12" y="${y(t)+4}" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#726c93">${t}%</text>`;
+  });
+  cols.forEach(c=>{
+    const b=BAHAGIAN.find(x=>x.key===c.key);
+    PERINGKAT[c.key].forEach(p=>{
+      const yt=y(p.hi/b.max*100), yb=y(p.lo/b.max*100);
+      s+=`<rect x="${c.x}" y="${yt}" width="${c.w}" height="${Math.max(yb-yt,3)}" rx="6" fill="${p.c}" opacity=".16"/>`
+        +`<text x="${c.x+6}" y="${yt+(yb-yt)/2+3.5}" font-family="Plus Jakarta Sans, sans-serif" font-size="9.5" fill="${p.c}" font-weight="600">${p.nama==='Tidak Mencapai Tahap Penguasaan Minimum'?'TMTPM':p.nama}</text>`;
+    });
+    s+=`<text x="${c.x+c.w/2}" y="16" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="${c.c}">${c.t}</text>`;
+  });
+  cols.forEach(c=>{
+    const v=pos?pos[c.key]:null; if(v==null) return;
+    const cy=y(v);
+    s+=`<g><line x1="${c.x-6}" y1="${cy}" x2="${c.x+c.w+6}" y2="${cy}" stroke="${c.c}" stroke-width="2.5"/>`
+      +`<circle cx="${c.x+c.w+6}" cy="${cy}" r="4.5" fill="${c.c}"/>`
+      +`<rect x="${c.x+c.w/2-24}" y="${cy-9}" width="48" height="18" rx="6" fill="${c.c}"/>`
+      +`<text x="${c.x+c.w/2}" y="${cy+4}" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="700" fill="#fff">${Math.round(v)}%</text></g>`;
+  });
+  s+='</svg>';
+  return `<div class="tanggawrap">${s}${legend?'<p class="hint" style="margin:10px 0 0">Kedua-dua bahagian dilukis pada satu paksi peratus. Perhatikan bahawa Cemerlang di Bahagian B bermula pada 91% berbanding 87% di Bahagian A — calon yang sama boleh mendapat peringkat berbeza pada dua bahagian.</p>':''}</div>`;
+}
+
+/* ---------- carta kecil ---------- */
+function barChart(items,{max=5,h=150}={}){
+  const n=items.length,w=300,pad=26,bw=(w-pad*2)/n*0.56,gap=(w-pad*2)/n;
+  let s=`<svg viewBox="0 0 ${w} ${h}" width="100%" role="img">`;
+  [0,.25,.5,.75,1].forEach(t=>{s+=`<line x1="${pad-8}" x2="${w-8}" y1="${18+(h-52)*(1-t)}" y2="${18+(h-52)*(1-t)}" stroke="#f4f1fb"/>`});
+  items.forEach((it,i)=>{
+    const v=Math.max(0,Math.min(max,it.v)), bh=(h-52)*(v/max), x=pad+gap*i+(gap-bw)/2, yy=18+(h-52)-bh;
+    s+=`<rect x="${x}" y="${yy}" width="${bw}" height="${Math.max(bh,2)}" rx="6" fill="${it.c}"><animate attributeName="height" from="0" to="${Math.max(bh,2)}" dur=".7s" fill="freeze"/><animate attributeName="y" from="${18+(h-52)}" to="${yy}" dur=".7s" fill="freeze"/></rect>`;
+    s+=`<text x="${x+bw/2}" y="${yy-6}" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="700" fill="#1b1631">${r1(it.v)}</text>`;
+    s+=`<text x="${x+bw/2}" y="${h-14}" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#726c93">${it.l}</text>`;
+  });
+  return s+'</svg>';
+}
+function gredChart(records){
+  const order=['A+','A','A-','B+','B','C+','C','D','E','G'];
+  const buckets={}; order.forEach(o=>buckets[o]=0);
+  records.forEach(r=>{buckets[gredOf(recTotal(r))[1]]++});
+  const maxV=Math.max(1,...order.map(o=>buckets[o]));
+  return order.map(o=>{
+    const v=buckets[o]||0, pct=v/maxV*100, col=(GRED.find(g=>g[1]===o)||[])[2]||'#726c93';
+    return `<div style="display:grid;grid-template-columns:34px 1fr 26px;gap:10px;align-items:center;margin-bottom:7px">
+      <span class="mono" style="font-size:12px;color:var(--mist)">${o}</span>
+      <div class="meter" style="height:14px"><i style="width:${pct}%;background:${col};opacity:${v?1:.25}"></i></div>
+      <b class="mono" style="font-size:12.5px;${v?'':'opacity:.3'}">${v}</b></div>`;
+  }).join('');
+}
+
+function engineBanner(){
+  if(engineReady()) return '';
+  return `<div class="card pad" style="margin-bottom:16px;border-left:5px solid var(--merah);background:#fff7f6;display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+    <div style="margin-right:auto"><b>Enjin pemeriksaan belum disambung.</b>
+      <p class="hint" style="margin:4px 0 0">Tambah kunci API, atau tukar kepada memeriksa sendiri — mod itu tidak memerlukan apa-apa dan tetap membina profil serta pelan intervensi.</p></div>
+    <button class="btn sm" style="background:var(--merah)" onclick="go('settings')">Pilih enjin</button></div>`;
+}
+
+/* =====================================================================
+   HALAMAN UTAMA
+   ===================================================================== */
+let CLASS_FILTER='all', SEARCH='';
+function drawHome(){
+  const el=$('#v-home');
+  const classes=[...new Set(RECORDS.map(r=>r.klass).filter(Boolean))].sort();
+  let rows=RECORDS.filter(r=>CLASS_FILTER==='all'||r.klass===CLASS_FILTER)
+                  .filter(r=>!SEARCH||r.name.toLowerCase().includes(SEARCH.toLowerCase()));
+  rows=[...rows].sort((a,b)=>b.date.localeCompare(a.date));
+
+  if(!RECORDS.length){
+    el.innerHTML=engineBanner()+`<div class="card" style="padding:0;overflow:hidden">
+      <div style="padding:30px 26px;background:linear-gradient(120deg,#1b1631,#3c2a86);color:#fff">
+        <div class="eyebrow" style="color:#c9bff0">Belum ada karangan diperiksa</div>
+        <h2 style="font-size:30px;margin:10px 0">Selamat datang, ${esc(TEACHER.name.split(' ')[0])}.</h2>
+        <p style="max-width:54ch;line-height:1.65;color:#d8d2f0;margin:0">Periksa karangan pertama anda dan halaman ini akan terisi dengan angka yang benar-benar diperlukan selepas sesi pemeriksaan: taburan gred kelas, aspek mana yang paling menarik markah ke bawah, dan murid mana yang perlu dipanggil dahulu.</p>
+        <button class="btn" style="background:var(--emas);color:#1b1631;margin-top:20px" onclick="newSession()">Periksa karangan</button>
+      </div>
+      <div class="pad">${tangga(null)}</div></div>`;
+    return;
+  }
+
+  const totals=RECORDS.map(recTotal);
+  const aspekAvgs=ASPEK.map(a=>{
+    const vals=[];
+    RECORDS.forEach(r=>BAHAGIAN.forEach(b=>{const v=r.parts?.[b.key]?.aspek?.[a.k]; if(typeof v==='number') vals.push(v)}));
+    return {l:a.pendek,v:avg(vals),c:a.c,k:a.k,nama:a.nama};
+  });
+  const lemah=[...aspekAvgs].sort((a,b)=>a.v-b.v)[0];
+  const bhgAvgs=BAHAGIAN.map(b=>{
+    const vals=RECORDS.map(r=>markahBhg(r,b.key)).filter(v=>v!=null);
+    return {l:b.pendek,v:avg(vals),c:b.colour,max:b.max};
+  });
+  const purata=avg(totals), g=gredOf(purata);
+
+  el.innerHTML=`
+  ${engineBanner()}
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px">
+    <div><div class="eyebrow">${esc(TEACHER.school)} · papan pemuka pemeriksaan</div>
+      <h2 style="font-size:30px;margin-top:8px">Selamat datang, ${esc(TEACHER.name.split(' ')[0])}.</h2></div>
+    <button class="btn tone" onclick="newSession()">+ Periksa karangan</button>
+  </div>
+
+  <div class="tiles" style="margin-bottom:16px">
+    <div class="tile"><span class="eyebrow">Karangan diperiksa</span><b>${RECORDS.length}</b><i style="background:var(--nila)"></i></div>
+    <div class="tile"><span class="eyebrow">Purata markah</span><b>${r1(purata)}<small style="font-size:15px;color:var(--mist)">/100</small></b><i style="background:var(--emas)"></i></div>
+    <div class="tile"><span class="eyebrow">Gred purata kelas</span><b style="color:${g[2]}">${g[1]}</b><i style="background:var(--hutan)"></i></div>
+    <div class="tile"><span class="eyebrow">Aspek paling lemah</span><b style="font-size:21px;margin-top:9px">${lemah.nama.split(' ')[0]}</b><span class="hint">${r1(lemah.v)} daripada 5 secara purata</span><i style="background:var(--merah)"></i></div>
+  </div>
+
+  <div class="two" style="margin-bottom:16px">
+    <div class="card pad">
+      <span class="eyebrow">Kedudukan kelas</span>
+      <h3 style="font-size:19px;margin:8px 0 16px">Taburan gred bagi ${RECORDS.length} calon</h3>
+      ${gredChart(RECORDS)}
+      <p class="hint" style="margin-top:12px">Gred dikira daripada jumlah Bahagian A dan Bahagian B (100 markah) mengikut julat gred SPM.</p>
+    </div>
+    <div class="card pad">
+      <span class="eyebrow">Empat aspek</span>
+      <h3 style="font-size:19px;margin:8px 0 6px">Purata aspek, kedua-dua bahagian</h3>
+      ${barChart(aspekAvgs)}
+      <div style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px">
+        <span class="eyebrow">Purata markah setiap bahagian</span>
+        ${barChart(bhgAvgs.map(b=>({l:b.l+' /'+b.max,v:b.v/b.max*100,c:b.c})),{max:100,h:130})}
+        <p class="hint">Ditunjukkan sebagai peratus supaya dua bahagian yang berlainan markah penuh boleh dibandingkan.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="pad" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--line)">
+      <h3 style="font-size:18px;margin-right:auto">Senarai calon</h3>
+      <input type="text" id="q" placeholder="Cari nama" value="${esc(SEARCH)}" style="width:180px;padding:9px 12px">
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="chip" aria-pressed="${CLASS_FILTER==='all'}" data-cf="all">Semua kelas</button>
+        ${classes.map(c=>`<button class="chip" aria-pressed="${CLASS_FILTER===c}" data-cf="${esc(c)}">${esc(c)}</button>`).join('')}
+      </div>
+    </div>
+    <div style="overflow-x:auto">
+    <table><thead><tr><th>Calon</th><th>Kelas</th><th>Bhg A</th><th>Bhg B</th><th>Jumlah</th><th>Gred</th><th>Diperiksa</th></tr></thead>
+    <tbody>${rows.map(r=>{
+      const t=recTotal(r), gg=gredOf(t);
+      return `<tr data-open="${r.id}">
+        <td><b>${esc(r.name)}</b></td><td class="mono" style="color:var(--mist)">${esc(r.klass||'—')}</td>
+        ${BAHAGIAN.map(b=>{const m=markahBhg(r,b.key);
+          return `<td class="mono">${m!=null?m+'<span style="color:var(--mist)">/'+b.max+'</span>':'<span style="opacity:.3">—</span>'}</td>`}).join('')}
+        <td><b class="mono" style="font-size:15px">${t}</b><span style="color:var(--mist)">/100</span></td>
+        <td><span class="pill" style="background:${gg[2]}1f;color:${gg[2]}">${gg[1]}</span></td>
+        <td class="hint">${new Date(r.date).toLocaleDateString('ms-MY',{day:'2-digit',month:'short'})}</td></tr>`;
+    }).join('')||`<tr><td colspan="7" class="empty">Tiada calon sepadan dengan tapisan itu.</td></tr>`}</tbody></table></div>
+  </div>`;
+
+  $('#q').oninput=e=>{SEARCH=e.target.value; drawHome(); const q=$('#q'); q.focus(); q.setSelectionRange(q.value.length,q.value.length);};
+  $$('[data-cf]',el).forEach(b=>b.onclick=()=>{CLASS_FILTER=b.dataset.cf;drawHome()});
+  $$('[data-open]',el).forEach(tr=>tr.onclick=()=>openReport(tr.dataset.open));
+}
+
+/* =====================================================================
+   SESI PEMERIKSAAN
+   ===================================================================== */
+let SHOTS={ba:{q:[],a:[]},bb:{q:[],a:[]}};
+let STEP=0; // 0 butiran, 1 Bhg A, 2 Bhg B, 3 laporan
+
+function newSession(){
+  CURRENT={id:uid(),name:'',klass:'',date:new Date().toISOString(),guru:TEACHER.email,parts:{},soalanB:1};
+  SHOTS={ba:{q:[],a:[]},bb:{q:[],a:[]}};
+  STEP=0; drawMark(); go('mark');
+}
+function stepBar(){
+  const names=['Calon','Bahagian A','Bahagian B','Laporan'];
+  return `<div class="steps">${names.map((n,i)=>
+    `<div class="step ${i===STEP?'now':''} ${i<STEP?'done':''}"><u>${i<STEP?'✓':i+1}</u>${n}</div>`).join('')}</div>`;
+}
+
+function drawMark(){
+  const el=$('#v-mark');
+  if(STEP===0){
+    el.innerHTML=stepBar()+`
+    <div class="card pad" style="max-width:620px">
+      <span class="eyebrow">Langkah 1</span>
+      <h2 style="font-size:26px;margin:8px 0 6px">Siapa penulis karangan ini?</h2>
+      <p class="hint" style="margin-bottom:20px">Nama dan kelas akan tertera pada laporan dan digunakan dalam analisis kelas di halaman utama.</p>
+      <label class="f"><span>Nama calon</span><input type="text" id="sName" value="${esc(CURRENT.name)}" placeholder="cth. Nurul Aisyah binti Ahmad"></label>
+      <label class="f"><span>Kelas</span><input type="text" id="sClass" value="${esc(CURRENT.klass)}" placeholder="cth. 5 Amanah" list="klasses">
+        <datalist id="klasses">${[...new Set(RECORDS.map(r=>r.klass).filter(Boolean))].map(c=>`<option value="${esc(c)}">`).join('')}</datalist></label>
+      <button class="btn tone" id="sGo">Mula dengan Bahagian A →</button>
+    </div>`;
+    $('#sGo').onclick=()=>{
+      CURRENT.name=$('#sName').value.trim(); CURRENT.klass=$('#sClass').value.trim();
+      if(!CURRENT.name) return toast('Isikan nama calon dahulu');
+      STEP=1; drawMark();
+    };
+    $('#sName').focus();
+    return;
+  }
+  if(STEP>=1&&STEP<=2) return drawPart(BAHAGIAN[STEP-1]);
+  if(STEP===3) return drawSessionEnd();
+}
+
+function soalanTerpilih(){
+  return SKEMA.bb.find(s=>s.n===CURRENT.soalanB) || null;
+}
+function tugasanTeks(b){
+  if(b.key==='ba'){
+    if(CURRENT.tugasanA) return CURRENT.tugasanA;
+    return `Tema: ${SKEMA.ba.tema}. Tugasan: ${SKEMA.ba.tugasan}. Cadangan idea daripada bahan rangsangan: ${SKEMA.ba.idea.join('; ')}.`;
+  }
+  if(CURRENT.soalanB===0) return CURRENT.tugasanB||'';
+  const s=soalanTerpilih(); if(!s) return CURRENT.tugasanB||'';
+  return `Soalan ${s.n}. Tema: ${s.tema}. Tugasan: ${s.tugasan}. Cadangan idea skema: ${s.idea.join('; ')}. Cadangan peribahasa: ${s.ungkapan.join('; ')}.`;
+}
+
+function drawPart(b){
+  const el=$('#v-mark');
+  const done=CURRENT.parts[b.key]?.markah!=null?CURRENT.parts[b.key]:null;
+  const s=soalanTerpilih();
+  el.innerHTML=stepBar()+`
+  <div class="card partcard" style="--c:${b.colour}">
+    <div class="pad">
+      <div style="display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap">
+        <div style="margin-right:auto">
+          <span class="eyebrow" style="color:${b.colour}">${esc(CURRENT.name)} · ${esc(CURRENT.klass||'tiada kelas')}</span>
+          <h2 style="font-size:27px;margin:8px 0 6px">${b.label}</h2>
+          <p class="hint">${b.tugas} · ${b.panjang} · pemeriksaan holistik</p>
+        </div>
+        <div style="text-align:right"><span class="eyebrow">Markah penuh</span><div class="big" style="font-size:34px">${b.max}</div></div>
+      </div>
+
+      ${b.key==='bb'?`<label class="f" style="max-width:520px;margin-top:18px"><span>Soalan yang dijawab calon</span>
+        <select id="soalanB">
+          ${SKEMA.bb.map(x=>`<option value="${x.n}" ${CURRENT.soalanB===x.n?'selected':''}>Soalan ${x.n} — ${esc(x.tema)}</option>`).join('')}
+          <option value="0" ${CURRENT.soalanB===0?'selected':''}>Soalan lain (taip sendiri)</option>
+        </select></label>
+        ${CURRENT.soalanB===0?`<label class="f" style="max-width:640px"><span>Tema dan tugasan soalan itu</span>
+          <textarea id="tugasanB" rows="3" placeholder="Tema: ... Tugasan: ...">${esc(CURRENT.tugasanB||'')}</textarea></label>`
+        :`<div class="quote" style="border-color:${b.colour};max-width:640px"><b>Tugasan skema:</b> ${esc(s?s.tugasan:'')}<br>
+           <span class="hint">Cadangan idea: ${esc(s?s.idea.join(' · '):'')}</span></div>`}`
+      :`<div class="quote" style="border-color:${b.colour};max-width:640px;margin-top:18px"><b>Tema skema:</b> ${esc(SKEMA.ba.tema)} — ${esc(SKEMA.ba.tugasan)}<br>
+        <span class="hint">Tukar tema di bawah jika kertas anda berlainan.</span></div>
+        <label class="f" style="max-width:640px;margin-top:12px"><span>Tema dan tugasan Bahagian A (biarkan kosong untuk guna skema)</span>
+          <textarea id="tugasanA" rows="2" placeholder="Tema: ... Tugasan: ...">${esc(CURRENT.tugasanA||'')}</textarea></label>`}
+
+      ${ENGINE==='manual'?'':`
+      <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:18px" id="dropGrid">
+        ${shotBox(b,'q','Kertas soalan','Rakam soalan dan bahan rangsangan supaya pemeriksaan mengikut tugasan sebenar.')}
+        ${shotBox(b,'a','Karangan calon','Rakam setiap muka surat tulisan calon. Tegak, cahaya cukup.')}
+      </div>
+      <p class="hint" style="margin-top:10px">Pada telefon, butang ini membuka kamera. Pada komputer riba, ia membuka fail anda. Gambar digunakan untuk pemeriksaan sahaja dan tidak disimpan dalam rekod — hanya markah, nota dan transkrip yang disimpan.${(SHOTS[b.key].q.length+SHOTS[b.key].a.length)?` <b>Lebih kurang ${payloadMB(b.key).toFixed(1)} MB akan dihantar</b> — melebihi 4 MB pada talian mudah alih selalunya gagal.`:''}</p>`}
+
+      <div id="markZone" style="margin-top:20px">
+        ${done?renderPartResult(b,done):''}
+      </div>
+
+      <div id="sampleZone" style="margin-top:20px">${sampleBlock(b)}</div>
+
+      ${handPanel(b)}
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
+        ${ENGINE==='manual'?'':`<button class="btn" id="run" style="background:${b.colour}">${done?'Baca karangan sekali lagi':'Baca dan periksa karangan'}</button>`}
+        ${done?`<button class="btn ${ENGINE==='manual'?'':'ghost'}" id="next" ${ENGINE==='manual'?`style="background:${b.colour}"`:''}>${b.n<2?'Seterusnya: Bahagian B →':'Bina laporan →'}</button>`:''}
+        <button class="btn ghost" id="skip" style="margin-left:auto">${b.n<2?'Langkau bahagian ini':'Terus ke laporan'}</button>
+      </div>
+    </div>
+  </div>`;
+
+  if($('#soalanB')) $('#soalanB').onchange=e=>{CURRENT.soalanB=+e.target.value; drawPart(b);};
+  if($('#tugasanB')) $('#tugasanB').oninput=e=>CURRENT.tugasanB=e.target.value;
+  if($('#tugasanA')) $('#tugasanA').oninput=e=>CURRENT.tugasanA=e.target.value;
+  if(ENGINE!=='manual') ['q','a'].forEach(kind=>wireShots(b,kind));
+  wireHand(b);
+  wireSample(b);
+  if($('#run')) $('#run').onclick=()=>markPart(b);
+  $('#skip').onclick=()=>{STEP=b.n<2?STEP+1:3; drawMark();};
+  if($('#next')) $('#next').onclick=()=>{STEP=b.n<2?STEP+1:3; drawMark();};
+}
+
+function shotBox(b,kind,title,help){
+  const list=SHOTS[b.key][kind];
+  return `<div>
+    <div class="drop ${list.length?'has':''}" id="drop-${kind}">
+      <div style="font-size:26px">${kind==='q'?'📄':'✍️'}</div>
+      <b style="display:block;margin:6px 0 4px;font-size:15px">${title}</b>
+      <p class="hint" style="max-width:34ch;margin:0 auto 12px">${help}</p>
+      <label class="btn ghost sm" style="cursor:pointer">${list.length?'Tambah lagi':'Rakam / pilih gambar'}
+        <input type="file" accept="image/*" capture="environment" multiple hidden id="in-${kind}"></label>
+      <div class="shots" id="sh-${kind}">${list.map((s,i)=>`<div class="shot"><img src="${s}" alt=""><button data-rm="${kind}:${i}">×</button></div>`).join('')}</div>
+    </div></div>`;
+}
+function wireShots(b,kind){
+  const inp=$('#in-'+kind), drop=$('#drop-'+kind);
+  inp.onchange=async e=>{
+    const files=[...e.target.files];
+    for(const f of files){
+      try{ SHOTS[b.key][kind].push(await shrink(f)); }catch(err){ toast('Fail itu tidak dapat dibaca'); }
+    }
+    e.target.value=''; drawPart(b);
+  };
+  drop.ondragover=e=>{e.preventDefault();drop.classList.add('has')};
+  drop.ondrop=async e=>{e.preventDefault();
+    for(const f of [...e.dataTransfer.files].filter(f=>f.type.startsWith('image/'))) SHOTS[b.key][kind].push(await shrink(f));
+    drawPart(b);};
+  $$('[data-rm]').forEach(x=>x.onclick=ev=>{ev.preventDefault();ev.stopPropagation();
+    const [k,i]=x.dataset.rm.split(':'); SHOTS[b.key][k].splice(+i,1); drawPart(b);});
+}
+function reshrink(dataURL,max=850,q=0.45){
+  return new Promise(res=>{
+    const img=new Image();
+    img.onload=()=>{
+      const sc=Math.min(1,max/Math.max(img.width,img.height));
+      const c=document.createElement('canvas');
+      c.width=Math.round(img.width*sc); c.height=Math.round(img.height*sc);
+      const x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height);
+      x.drawImage(img,0,0,c.width,c.height);
+      res(c.toDataURL('image/jpeg',q));
+    };
+    img.onerror=()=>res(dataURL); img.src=dataURL;
+  });
+}
+function payloadMB(key){
+  return ([...SHOTS[key].q,...SHOTS[key].a].reduce((t,d)=>t+d.length,0)*0.75/1048576);
+}
+function timeout(ms){ const c=new AbortController(); setTimeout(()=>c.abort(),ms); return c.signal; }
+function shrink(file,max=1200,q=0.62){
+  return new Promise((res,rej)=>{
+    const fr=new FileReader();
+    fr.onload=()=>{const img=new Image();
+      img.onload=()=>{
+        const sc=Math.min(1,max/Math.max(img.width,img.height));
+        const c=document.createElement('canvas');
+        c.width=Math.round(img.width*sc); c.height=Math.round(img.height*sc);
+        const x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height);
+        x.drawImage(img,0,0,c.width,c.height);
+        res(c.toDataURL('image/jpeg',q));
+      };
+      img.onerror=rej; img.src=fr.result;};
+    fr.onerror=rej; fr.readAsDataURL(file);
+  });
+}
+
+/* ---------- apabila sesuatu gagal ---------- */
+function failureCard(e){
+  const box=(title,body)=>`<div class="card pad" style="border-color:#f0cdca;background:#fff7f6">
+    <b style="font-size:16px">${title}</b><p class="hint" style="margin:8px 0 0;line-height:1.65">${body}</p>
+    <button class="btn ghost sm" style="margin-top:12px" onclick="go('settings')">Buka tetapan enjin</button></div>`;
+  if(e.message==='MANUAL') return box('Aplikasi ini ditetapkan untuk pemeriksaan sendiri.',
+    'Guna grid peringkat di bawah untuk memberi markah sendiri, atau sambungkan enjin pemeriksaan di <b>Simpanan → Enjin pemeriksaan</b> supaya karangan dibaca untuk anda.');
+  if(e.message==='NO_KEY') return box('Salinan ini memerlukan kunci API dahulu.',
+    'Anda menjalankan aplikasi ini dari alamat web anda sendiri, jadi ia tidak boleh meminjam pemeriksaan Claude. Di <b>Simpanan → Enjin pemeriksaan</b> anda boleh menambah kunci Google Gemini (peringkat percuma), kunci Anthropic, atau tukar kepada pemeriksaan sendiri. Kunci disimpan dalam pelayar ini sahaja.');
+  if(e.message==='BAD_KEY') return box('Kunci API ditolak.',
+    'Pastikan kunci disalin sepenuhnya, belum dibatalkan, dan akaun itu masih mempunyai kredit.');
+  if(e.message==='NO_REACH'||e.message==='TIMED_OUT') return `<div class="card pad" style="border-color:#f0cdca;background:#fff7f6">
+    <b style="font-size:16px">Gambar tidak sampai ke perkhidmatan pemeriksaan.</b>
+    <p class="hint" style="margin:8px 0 0;line-height:1.65">Sudah dicuba sekali lagi dengan gambar yang lebih kecil. Selalunya masalah muat naik, bukan sekatan: gambar berat pada talian lemah. Buang gambar yang tidak perlu, cari isyarat yang lebih kuat, kemudian periksa semula — atau berikan markah sendiri di bawah. Apa yang sudah diperiksa tidak hilang.</p></div>`;
+  return `<div class="card pad" style="border-color:#f0cdca;background:#fff7f6">
+    <b style="font-size:16px">Pemeriksaan tidak kembali.</b>
+    <p class="hint" style="margin:8px 0 0;line-height:1.65">${esc(e.message)}. Karangan yang panjang kadangkala tamat masa — cuba lagi, atau rakam gambar yang lebih sedikit dan lebih jelas.</p></div>`;
+}
+
+/* ---------- panggilan enjin ---------- */
+async function callAI(content,maxTokens=2000){
+  if(ENGINE==='manual') throw new Error('MANUAL');
+  if(ENGINE==='gemini') return callGemini(content,maxTokens);
+  return callAnthropic(content,maxTokens);
+}
+function parseJSON(text){
+  const clean=text.replace(/```json|```/g,'').trim();
+  const a=clean.indexOf('{'), b=clean.lastIndexOf('}');
+  if(a<0||b<0) throw new Error('Model membalas tanpa JSON. Cuba periksa sekali lagi.');
+  return JSON.parse(clean.slice(a,b+1));
+}
+async function callAnthropic(content,maxTokens){
+  const key=KEYS.anthropic;
+  if(!IN_ARTIFACT && !key) throw new Error('NO_KEY');
+  const headers={'Content-Type':'application/json'};
+  if(key){ headers['x-api-key']=key; headers['anthropic-version']='2023-06-01'; headers['anthropic-dangerous-direct-browser-access']='true'; }
+  let res;
+  try{
+    res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers,signal:timeout(120000),
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:maxTokens,messages:[{role:'user',content}]})});
+  }catch(e){ throw new Error(e.name==='AbortError'?'TIMED_OUT':'NO_REACH'); }
+  await guard(res);
+  const data=await res.json();
+  return parseJSON(data.content.filter(b=>b.type==='text').map(b=>b.text).join('\n'));
+}
+async function callGemini(content,maxTokens){
+  if(!KEYS.gemini) throw new Error('NO_KEY');
+  const parts=content.map(b=> b.type==='text' ? {text:b.text}
+    : {inline_data:{mime_type:b.source.media_type,data:b.source.data}});
+  const url=`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(GMODEL)}:generateContent?key=${encodeURIComponent(KEYS.gemini)}`;
+  let res;
+  try{
+    res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},
+      signal:timeout(120000),
+      body:JSON.stringify({contents:[{role:'user',parts}],
+        generationConfig:{temperature:0.2,maxOutputTokens:Math.max(maxTokens,2048),responseMimeType:'application/json'}})});
+  }catch(e){ throw new Error(e.name==='AbortError'?'TIMED_OUT':'NO_REACH'); }
+  if(res.status===404) throw new Error('Nama model "'+GMODEL+'" tidak diterima. Buka Simpanan dan tekan "Cari model saya" untuk memilih model yang boleh digunakan.');
+  await guard(res);
+  const data=await res.json();
+  const txt=(data.candidates?.[0]?.content?.parts||[]).map(p=>p.text||'').join('\n');
+  if(!txt) throw new Error(data.promptFeedback?.blockReason ? 'Google menyekat permintaan ini ('+data.promptFeedback.blockReason+'). Rakam semula gambar dan cuba lagi.' : 'Model membalas kosong. Cuba periksa sekali lagi.');
+  return parseJSON(txt);
+}
+async function guard(res){
+  if(res.status===401||res.status===403) throw new Error('BAD_KEY');
+  if(res.status===429) throw new Error('Kunci anda mencapai had kuota. Tunggu seminit, atau semak penggunaan dalam konsol penyedia.');
+  if(res.status===503||res.status===529) throw new Error('Perkhidmatan sedang sibuk. Cuba periksa semula sebentar lagi.');
+  if(!res.ok){ let d=''; try{ const j=await res.json(); d=j.error?.message||''; }catch(e){} throw new Error('HTTP '+res.status+(d?' — '+d:'')); }
+}
+async function listGeminiModels(){
+  const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models?key='+encodeURIComponent(KEYS.gemini));
+  await guard(r);
+  const j=await r.json();
+  return (j.models||[])
+    .filter(m=>(m.supportedGenerationMethods||[]).includes('generateContent'))
+    .map(m=>m.name.replace('models/',''))
+    .filter(n=>!/embedding|aqa|imagen|veo|tts|image$/i.test(n));
+}
+function imgBlocks(arr,caption){
+  const out=[];
+  if(arr.length){ out.push({type:'text',text:caption}); }
+  arr.forEach(d=>out.push({type:'image',source:{type:'base64',media_type:'image/jpeg',data:d.split(',')[1]}}));
+  return out;
+}
+
+/* ---------- memeriksa satu bahagian ---------- */
+async function markPart(b){
+  if(!SHOTS[b.key].a.length) return toast('Rakam gambar karangan calon dahulu');
+  const zone=$('#markZone');
+  zone.innerHTML=`<div class="working"><div class="spin" style="border-color:rgba(27,22,49,.2);border-top-color:${b.colour}"></div>
+    <div><b>Membaca karangan…</b><div class="hint">Mentranskripsi tulisan tangan, kemudian menilainya secara holistik mengikut peringkat ${b.pendek}.</div></div></div>`;
+  $('#run').disabled=true;
+
+  const prompt=`Anda ialah Pemeriksa Kertas Bahasa Melayu SPM 1103/1 yang berpengalaman, sedang memeriksa ${b.label} (${b.tugas}, ${b.panjang}, ${b.max} markah).
+
+TUGASAN YANG DIBERIKAN KEPADA CALON:
+${tugasanTeks(b)}
+
+${skalaTeks(b.key)}
+
+${PERATURAN}
+
+${KONTEKS}
+
+Baca gambar yang diberikan. Transkripsikan karangan calon persis seperti yang ditulis, kekalkan kesalahan ejaan dan tatabahasanya. Kemudian tentukan peringkat secara holistik, berikan markah dalam julat peringkat itu, dan justifikasikan pilihan julat atas atau julat bawah.
+
+Balas dengan JSON sahaja, tanpa teks lain:
+{
+ "transkrip":"karangan calon, kata demi kata, gunakan \\n untuk baris baharu",
+ "jumlahPerkataan": <nombor>,
+ "tugasanDibaca":"satu ayat tentang apa yang sebenarnya dikehendaki oleh tugasan itu",
+ "peringkat":"${PERINGKAT[b.key].map(p=>p.k).join('|')}",
+ "markah": <nombor dalam julat peringkat yang dipilih>,
+ "justifikasiMarkah":"2-3 ayat: mengapa peringkat ini, dan mengapa julat atas atau julat bawah dalam peringkat itu",
+ "aspek":{"tema":1-5,"idea":1-5,"bahasa":1-5,"pengolahan":1-5},
+ "sebab":{"tema":"2-3 ayat menamakan kriteria yang dipenuhi dan buktinya","idea":"...","bahasa":"...","pengolahan":"..."},
+ "bukti":[{"aspek":"tema|idea|bahasa|pengolahan","petikan":"frasa pendek disalin daripada karangan","nota":"apa yang ditunjukkannya"}],
+ "isi":[{"isi":"isi yang dikemukakan calon","huraian":"jelas dan matang|jelas|masih jelas|kurang jelas|tidak berkembang","contoh":true|false}],
+ "ungkapan":[{"ungkapan":"peribahasa/pantun/cogan kata yang digunakan calon","jenis":"peribahasa|pantun|cogan kata|kata hikmat|frasa menarik|petikan","tepat":true|false,"nota":"sesuai atau tersalah maksud"}],
+ "kesalahan":[{"jenis":"isi|bahasa|ejaan|tanda baca","tulis":"apa yang ditulis calon","betul":"pembetulan","berulang":true|false}],
+ "kekuatan":["2-4 perkara khusus dan pendek"],
+ "penambahbaikan":["2-4 perkara khusus, ditulis sebagai arahan kepada murid"]
+}`;
+
+  const build=()=>[{type:'text',text:prompt},...imgBlocks(SHOTS[b.key].q,'KERTAS SOALAN:'),...imgBlocks(SHOTS[b.key].a,'KARANGAN CALON:')];
+  try{
+    let out;
+    try{
+      out=await callAI(build(),3500);
+    }catch(err){
+      if(err.message!=='NO_REACH'&&err.message!=='TIMED_OUT') throw err;
+      zone.innerHTML=`<div class="working"><div class="spin" style="border-color:rgba(27,22,49,.2);border-top-color:${b.colour}"></div>
+        <div><b>Muat naik gagal. Mengecilkan gambar dan mencuba sekali lagi…</b><div class="hint">${payloadMB(b.key).toFixed(1)} MB terlalu besar untuk talian ini.</div></div></div>`;
+      SHOTS[b.key].q=await Promise.all(SHOTS[b.key].q.map(d=>reshrink(d)));
+      SHOTS[b.key].a=await Promise.all(SHOTS[b.key].a.map(d=>reshrink(d)));
+      out=await callAI(build(),3500);
+    }
+    /* pastikan markah kekal dalam julat peringkat yang dipilih */
+    const pk=PERINGKAT[b.key].some(p=>p.k===out.peringkat)?out.peringkat:peringkatDaripadaMarkah(b.key,out.markah||0);
+    const info=pInfo(b.key,pk);
+    out.peringkat=pk;
+    out.markah=Math.max(info.lo,Math.min(info.hi,Math.round(out.markah??info.lo)));
+    out.aspek=out.aspek||{};
+    ASPEK.forEach(a=>{out.aspek[a.k]=Math.max(1,Math.min(5,Math.round(out.aspek[a.k]??ASPEK_LALAI[b.key][pk])))});
+    if(b.key==='bb') out.soalan=CURRENT.soalanB;
+    CURRENT.parts[b.key]={...(CURRENT.parts[b.key]||{}),...out};
+    drawPart(b);
+    toast(`${b.pendek} diperiksa — ${out.markah}/${b.max} (${info.nama})`);
+  }catch(e){
+    zone.innerHTML=failureCard(e);
+    $('#run').disabled=false;
+  }
+}
+
+/* ---------- keputusan satu bahagian ---------- */
+function renderPartResult(b,out){
+  const info=pInfo(b.key,out.peringkat);
+  const atas=out.markah>=info.sub[0][0];
+  return `<div class="grid resgrid" style="grid-template-columns:1.25fr .75fr;gap:18px">
+    <div>
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:14px;flex-wrap:wrap">
+        <div class="big" style="color:${b.colour}">${out.markah}<small>/${b.max}</small></div>
+        <div><span class="pill" style="background:${info.c}1f;color:${info.c}">${info.nama} · ${info.lo}–${info.hi}</span>
+        <div class="hint" style="margin-top:4px">${atas?'julat atas':'julat bawah'} (${atas?info.sub[0].join('–'):info.sub[1].join('–')}) · ${out.jumlahPerkataan||'?'} patah perkataan</div></div>
+      </div>
+      ${ASPEK.map(a=>{const v=out.aspek?.[a.k]??0;return `<div class="scorerow">
+        <span style="font-size:12.5px;font-weight:600">${a.nama}</span>
+        <div class="meter"><i style="width:${v/5*100}%;background:${a.c}"></i></div><b>${v}</b></div>`}).join('')}
+      <p class="hint" style="margin-top:10px">${out.diperiksaSendiri?`<b>Diperiksa sendiri.</b>${out.notaGuru?' '+esc(out.notaGuru):''}`:`<b>Tugasan dibaca sebagai:</b> ${esc(out.tugasanDibaca||'—')}`}</p>
+      ${out.justifikasiMarkah?`<div class="quote" style="border-color:${info.c}"><b>Mengapa markah ini:</b> ${esc(out.justifikasiMarkah)}</div>`:''}
+    </div>
+    <div>
+      ${(out.kekuatan||[]).length?`<span class="eyebrow">Kekuatan</span><ul class="tick" style="margin-bottom:12px">${out.kekuatan.map(t=>`<li style="--b:var(--ok)">${esc(t)}</li>`).join('')}</ul>`:''}
+      ${(out.penambahbaikan||[]).length?`<span class="eyebrow">Perlu diperbaik</span><ul class="tick">${out.penambahbaikan.map(t=>`<li style="--b:var(--merah)">${esc(t)}</li>`).join('')}</ul>`:''}
+    </div>
+  </div>
+  <div style="margin-top:18px">
+    ${ASPEK.map(a=>`<details class="accordion"><summary><span style="width:9px;height:9px;border-radius:3px;background:${a.c};display:inline-block"></span>${a.nama} — ${out.aspek?.[a.k]??'—'}/5</summary>
+      <div class="body">${esc(out.sebab?.[a.k]|| kriteriaFor(b.key,out.peringkat,a.k))}
+      ${(out.bukti||[]).filter(e=>e.aspek===a.k).map(e=>`<div class="quote">“${esc(e.petikan)}” — ${esc(e.nota)}</div>`).join('')}</div></details>`).join('')}
+    ${(out.isi||[]).length?`<details class="accordion"><summary>Isi yang dikemukakan — ${out.isi.length}</summary><div class="body">
+      <ul class="tick">${out.isi.map(i=>`<li>${esc(i.isi)} <span class="hint">— huraian ${esc(i.huraian||'?')}${i.contoh?' · ada contoh':' · tiada contoh'}</span></li>`).join('')}</ul></div></details>`:''}
+    ${(out.ungkapan||[]).length?`<details class="accordion"><summary>Ungkapan menarik — ${out.ungkapan.length}</summary><div class="body">
+      <ul class="tick">${out.ungkapan.map(u=>`<li style="--b:${u.tepat?'var(--ok)':'var(--merah)'}"><b>${esc(u.ungkapan)}</b> <span class="hint">(${esc(u.jenis||'ungkapan')}) — ${esc(u.nota||(u.tepat?'digunakan dengan tepat':'kurang tepat'))}</span></li>`).join('')}</ul></div></details>`:''}
+    ${(out.kesalahan||[]).length?`<details class="accordion"><summary>Senarai kesalahan — ${out.kesalahan.length} dikesan</summary><div class="body">
+      <table style="font-size:13px"><thead><tr><th>Tanda</th><th>Ditulis</th><th>Sepatutnya</th><th>Jenis</th></tr></thead><tbody>
+      ${out.kesalahan.map(e=>`<tr style="cursor:default"><td class="mono" style="color:var(--merah)">${tandaKesalahan(e)}</td><td>${esc(e.tulis)}</td><td style="color:var(--ok);font-weight:600">${esc(e.betul)}</td><td class="hint">${esc(e.jenis)}${e.berulang?' · berulang':''}</td></tr>`).join('')}
+      </tbody></table>
+      <p class="hint" style="margin-top:10px">Tanda mengikut arahan skema: ( ) kesalahan isi · garis bawah kesalahan bahasa · / kesalahan ejaan dan huruf besar · // kesalahan ejaan berulang.</p></div></details>`:''}
+    ${out.transkrip?`<details class="accordion"><summary>Transkrip karangan</summary><div class="body" style="white-space:pre-wrap;font-size:13.5px">${esc(out.transkrip)}</div></details>`:''}
+  </div>`;
+}
+function tandaKesalahan(e){
+  const j=(e.jenis||'').toLowerCase();
+  if(j.startsWith('isi')) return '( )';
+  if(j.startsWith('ejaan')) return e.berulang?'//':'/';
+  if(j.startsWith('tanda')) return '⌇';
+  return '___';
+}
+
+/* ---------- hujung sesi: bina laporan ---------- */
+async function drawSessionEnd(){
+  const el=$('#v-mark');
+  const marked=BAHAGIAN.filter(b=>CURRENT.parts[b.key]?.markah!=null);
+  if(!marked.length){ toast('Tiada yang diperiksa — tiada laporan untuk dibina'); STEP=1; return drawMark(); }
+  el.innerHTML=stepBar()+`<div class="card pad"><div class="working"><div class="spin" style="border-color:rgba(27,22,49,.2);border-top-color:var(--nila)"></div>
+    <div><b>Menulis pelan intervensi…</b><div class="hint">Membandingkan dua bahagian, mencari polanya, dan menukarkannya menjadi kerja yang boleh diberikan.</div></div></div></div>`;
+
+  const ringkas=marked.map(b=>{
+    const o=CURRENT.parts[b.key];
+    const info=pInfo(b.key,o.peringkat);
+    return `${b.label} — ${o.markah}/${b.max} (${info.nama}).
+Aspek: Tema/Tugasan ${o.aspek?.tema}, Idea ${o.aspek?.idea}, Bahasa ${o.aspek?.bahasa}, Pengolahan ${o.aspek?.pengolahan} (daripada 5).
+Catatan pemeriksa: ${o.sebab?.tema||''} ${o.sebab?.idea||''} ${o.sebab?.bahasa||''} ${o.sebab?.pengolahan||''}
+Kesalahan berulang: ${(o.kesalahan||[]).filter(e=>e.berulang).map(e=>e.tulis+' → '+e.betul).join('; ')||'tiada dicatat'}
+Ungkapan menarik: ${(o.ungkapan||[]).map(u=>u.ungkapan+(u.tepat?' (tepat)':' (kurang tepat)')).join('; ')||'tiada digunakan'}`;
+  }).join('\n\n');
+
+  const total=recTotal(CURRENT), g=gredOf(total);
+  const prompt=`Seorang calon SPM Bahasa Melayu baru sahaja diperiksa pada Kertas 1103/1. Ini rekod pemeriksa:
+
+Calon: ${CURRENT.name}, kelas ${CURRENT.klass||'tidak dinyatakan'}
+Jumlah: ${total}/100. Gred: ${g[1]}.
+
+${ringkas}
+
+${KONTEKS}
+
+Tuliskan intervensi yang patut dijalankan oleh guru kelas. Jadilah konkrit: namakan aspek, kelemahan sebenar dalam karangan calon ini, dan tugasan yang boleh dibuat oleh murid. Jangan memuji secara umum dan jangan mengulang markah semula. Tulis dalam bahasa Melayu baku.
+
+JSON sahaja:
+{
+ "diagnosis":"3-4 ayat. Apa yang sebenarnya menahan calon ini pada kedua-dua bahagian, dan apa yang sudah berjalan baik. Ditulis kepada guru.",
+ "keutamaan":[{"aspek":"Tema/Tugasan|Idea|Bahasa|Pengolahan","jurang":"kelemahan khusus dalam karangan ini","sasaran":"rupa peningkatan satu peringkat","mengapa":"satu baris mengapa ini paling berbaloi dibaiki dahulu"}],
+ "pelan":[{"minggu":"Minggu 1","fokus":"tajuk pendek","aktiviti":["2-3 aktiviti kelas atau kerja rumah, setiap satu boleh disiapkan dalam 30 minit"],"semakan":"bagaimana guru tahu ia berjaya"}],
+ "latihTubi":{"tajuk":"satu tugasan menulis pendek untuk diberikan sekarang","arahan":"tugasan itu persis seperti yang anda akan berikan kepada murid, 2-4 ayat","kriteriaBerjaya":["3 perkara yang boleh disemak sendiri oleh murid"]},
+ "kepadaMurid":"4-5 ayat ditujukan kepada murid dalam bahasa Melayu yang mudah dan mesra. Nyatakan apa yang sudah baik, kemudian satu perkara yang perlu diubah.",
+ "bankKata":["6-10 kata hubung, frasa atau peribahasa yang patut mula digunakan oleh calon ini dalam karangan berikutnya"]
+}
+Berikan tepat 3 keutamaan, paling berbaloi dahulu, dan tepat 3 minggu dalam pelan.`;
+
+  if(ENGINE==='manual'){
+    CURRENT.report=localReport(CURRENT);
+    CURRENT.total=total;
+    RECORDS=RECORDS.filter(r=>r.id!==CURRENT.id); RECORDS.push(CURRENT);
+    await saveRecords(); SHOTS={ba:{q:[],a:[]},bb:{q:[],a:[]}};
+    openReport(CURRENT.id); return toast('Laporan dibina dan disimpan');
+  }
+  try{
+    CURRENT.report=await callAI([{type:'text',text:prompt}],3000);
+  }catch(e){
+    const why = e.message==='NO_KEY' ? 'tiada kunci disimpan' :
+                e.message==='BAD_KEY' ? 'kunci ditolak' :
+                e.message==='NO_REACH' ? 'perkhidmatan tidak dapat dihubungi' : e.message;
+    CURRENT.report=localReport(CURRENT);
+    CURRENT.report.diagnosis='[Dibina tanpa perkhidmatan pemeriksaan — '+why+'. Semua di bawah dibina daripada peringkat dan aspek yang direkodkan.] '+CURRENT.report.diagnosis;
+  }
+  if(ENGINE!=='manual'){
+    el.innerHTML=stepBar()+`<div class="card pad"><div class="working"><div class="spin" style="border-color:rgba(27,22,49,.2);border-top-color:var(--emas)"></div>
+      <div><b>Menulis latihan pemulihan…</b><div class="hint">Menukar diagnosis kepada kerja yang boleh dimulakan calon ini, dibina daripada ayatnya sendiri.</div></div></div></div>`;
+    try{ await makeExercises(CURRENT); }catch(e){}
+  }
+  CURRENT.total=recTotal(CURRENT);
+  RECORDS=RECORDS.filter(r=>r.id!==CURRENT.id); RECORDS.push(CURRENT);
+  await saveRecords();
+  SHOTS={ba:{q:[],a:[]},bb:{q:[],a:[]}};
+  openReport(CURRENT.id);
+  toast('Disimpan dalam rekod anda');
+}
+
+/* =====================================================================
+   LAPORAN
+   ===================================================================== */
+function openReport(id){
+  const r=RECORDS.find(x=>x.id===id); if(!r) return;
+  CURRENT=r;
+  const el=$('#v-report');
+  const pos={}; BAHAGIAN.forEach(b=>{const m=markahBhg(r,b.key); pos[b.key]=m==null?null:m/b.max*100;});
+  const total=recTotal(r), g=gredOf(total), rep=r.report||{};
+  const aspekVals=ASPEK.map(a=>({l:a.pendek,c:a.c,v:aspekAvg(r,a.k)}));
+
+  el.innerHTML=`
+  <div class="noprint" style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+    <button class="btn ghost sm" onclick="go('home')">← Semua calon</button>
+    <button class="btn ghost sm" onclick="window.print()">Cetak / simpan PDF</button>
+    <button class="btn ghost sm" onclick="copyStudentNote()">Salin nota untuk murid</button>
+    <button class="btn sm" style="background:var(--ungu)" onclick="openPractice('${r.id}')">${r.report?.latihan?.length?r.report.latihan.length+' latihan sedia →':'Buka bilik pemulihan →'}</button>
+    <button class="btn danger sm" style="margin-left:auto" onclick="delRecord('${r.id}')">Padam rekod ini</button>
+  </div>
+
+  <div class="card" style="overflow:hidden;margin-bottom:16px">
+    <div style="padding:26px;background:linear-gradient(120deg,#1b1631,#3c2a86);color:#fff;display:flex;gap:22px;flex-wrap:wrap;align-items:center">
+      <div style="margin-right:auto">
+        <div class="eyebrow" style="color:#c9bff0">SPM 1103/1 Bahasa Melayu Kertas 1 · diperiksa ${new Date(r.date).toLocaleDateString('ms-MY',{day:'numeric',month:'long',year:'numeric'})}</div>
+        <h2 style="font-size:32px;margin:8px 0 4px">${esc(r.name)}</h2>
+        <p style="margin:0;color:#d8d2f0">${esc(r.klass||'Tiada kelas')} · diperiksa oleh ${esc(TEACHER.name)}, ${esc(TEACHER.school)}</p>
+      </div>
+      <div style="text-align:right">
+        <div class="big" style="color:#fff">${total}<small style="color:#c9bff0">/100</small></div>
+        <span class="pill" style="background:${g[2]};color:#fff;margin-top:6px">Gred ${g[1]}</span>
+      </div>
+    </div>
+    <div class="pad two" style="align-items:start">
+      <div>
+        <span class="eyebrow">Profil peringkat</span>
+        <h3 style="font-size:19px;margin:8px 0 12px">Kedudukan setiap bahagian</h3>
+        ${BAHAGIAN.map(b=>{const o=r.parts?.[b.key]; if(!o||o.markah==null) return `<div class="hint" style="padding:10px 0">${b.pendek} — tidak diperiksa</div>`;
+          const info=pInfo(b.key,o.peringkat);
+          return `<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:13.5px;font-weight:600;margin-bottom:5px;gap:8px">
+            <span style="color:${b.colour}">${b.pendek}${b.key==='bb'&&o.soalan?' · Soalan '+o.soalan:''}</span>
+            <span class="mono">${o.markah}/${b.max} · ${info.nama}</span></div>
+            <div style="display:flex;gap:4px">${ASPEK.map(a=>`<div style="flex:1"><div class="meter" style="height:9px"><i style="width:${(o.aspek?.[a.k]||0)/5*100}%;background:${a.c}"></i></div>
+            <div class="hint" style="font-size:10px;margin-top:3px;text-align:center">${a.pendek} ${o.aspek?.[a.k]??'—'}</div></div>`).join('')}</div></div>`;
+        }).join('')}
+        <div style="border-top:1px solid var(--line);margin-top:14px;padding-top:12px">
+          <span class="eyebrow">Purata setiap aspek</span>${barChart(aspekVals,{h:140})}</div>
+      </div>
+      <div>${tangga(pos,{legend:true})}</div>
+    </div>
+  </div>
+
+  ${rep.diagnosis?`<div class="card pad" style="margin-bottom:16px;border-left:5px solid var(--ungu)">
+    <span class="eyebrow">Diagnosis</span><h3 style="font-size:20px;margin:8px 0 10px">Apa yang menahan calon ini</h3>
+    <p style="line-height:1.7;margin:0;color:var(--ink-2)">${esc(rep.diagnosis)}</p></div>`:''}
+
+  ${(rep.keutamaan||[]).length?`<div style="margin-bottom:16px"><span class="eyebrow">Baiki mengikut urutan ini</span>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:10px">
+    ${rep.keutamaan.map((p,i)=>{const a=ASPEK.find(a=>(p.aspek||'').toLowerCase().includes(a.k.slice(0,4)))||ASPEK[i%4];
+      return `<div class="card pad" style="border-top:4px solid ${a.c}">
+        <div class="mono" style="font-size:11px;color:var(--mist)">KEUTAMAAN ${i+1}</div>
+        <h4 style="font-size:17px;margin:6px 0 10px">${esc(p.aspek)}</h4>
+        <p style="font-size:14px;line-height:1.6;margin:0 0 10px">${esc(p.jurang)}</p>
+        <div class="quote" style="border-color:${a.c}"><b>Sasaran:</b> ${esc(p.sasaran)}</div>
+        <p class="hint" style="margin:8px 0 0">${esc(p.mengapa||'')}</p></div>`}).join('')}</div></div>`:''}
+
+  ${(rep.pelan||[]).length?`<div class="card pad" style="margin-bottom:16px">
+    <span class="eyebrow">Intervensi tiga minggu</span><h3 style="font-size:20px;margin:8px 0 14px">Apa yang perlu dijalankan dalam kelas</h3>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr))">
+    ${rep.pelan.map((w,i)=>`<div class="week"><div class="mono" style="font-size:11px;color:${['var(--emas)','var(--hutan)','var(--ungu)'][i%3]}">${esc(w.minggu)}</div>
+      <h4>${esc(w.fokus)}</h4><ul class="tick">${(w.aktiviti||[]).map(a=>`<li>${esc(a)}</li>`).join('')}</ul>
+      <p class="hint" style="margin:10px 0 0"><b>Semakan:</b> ${esc(w.semakan||'')}</p></div>`).join('')}</div></div>`:''}
+
+  ${rep.latihTubi?`<div class="card pad" style="margin-bottom:16px;background:linear-gradient(120deg,rgba(201,138,16,.14),rgba(60,42,134,.08))">
+    <span class="eyebrow">Berikan sekarang</span><h3 style="font-size:20px;margin:8px 0 8px">${esc(rep.latihTubi.tajuk)}</h3>
+    <p style="line-height:1.65;margin:0 0 12px">${esc(rep.latihTubi.arahan)}</p>
+    <b style="font-size:13px">Murid menyemak perkara ini sebelum menghantar:</b>
+    <ul class="tick">${(rep.latihTubi.kriteriaBerjaya||[]).map(s=>`<li>${esc(s)}</li>`).join('')}</ul></div>`:''}
+
+  <div class="two" style="margin-bottom:16px">
+    ${rep.kepadaMurid?`<div class="card pad"><span class="eyebrow">Serahkan kepada murid</span>
+      <p id="studentNote" style="font-size:16px;line-height:1.75;margin:10px 0 0">${esc(rep.kepadaMurid)}</p></div>`:'<div></div>'}
+    ${(rep.bankKata||[]).length?`<div class="card pad"><span class="eyebrow">Bank kata untuk karangan seterusnya</span>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px">${rep.bankKata.map(w=>`<span class="pill" style="background:var(--paper);font-size:13px;padding:7px 12px">${esc(w)}</span>`).join('')}</div></div>`:''}
+  </div>
+
+  ${BAHAGIAN.some(b=>r.parts?.[b.key]?.contoh)?`<div class="card pad" style="margin-bottom:16px">
+    <span class="eyebrow">Karangan contoh</span><h3 style="font-size:20px;margin:8px 0 4px">Rupa karangan peringkat Cemerlang</h3>
+    <p class="hint" style="margin-bottom:6px">Edarkan bersebelahan karangan yang telah diperiksa — jurang antara keduanya itulah pengajarannya.</p>
+    ${BAHAGIAN.filter(b=>r.parts?.[b.key]?.contoh).map(b=>`<details class="accordion" style="margin-top:10px">
+        <summary style="border-left:4px solid ${b.colour}">${b.pendek} — karangan contoh</summary>
+        <div class="body">${modelCard(b,r.parts[b.key].contoh,0)}</div></details>`).join('')}
+  </div>`:''}
+
+  <div class="card pad">
+    <span class="eyebrow">Rekod pemeriksa</span><h3 style="font-size:20px;margin:8px 0 14px">Bukti di sebalik setiap markah</h3>
+    ${BAHAGIAN.filter(b=>r.parts?.[b.key]?.markah!=null).map(b=>`<details class="accordion" ${b.key==='ba'?'open':''}>
+      <summary style="border-left:4px solid ${b.colour}">${b.pendek} — ${r.parts[b.key].markah}/${b.max}</summary>
+      <div class="body">${renderPartResult(b,r.parts[b.key])}</div></details>`).join('')}
+  </div>`;
+  go('report');
+}
+function copyStudentNote(){
+  const t=$('#studentNote')?.textContent||''; if(!t) return toast('Tiada nota murid dalam laporan ini');
+  navigator.clipboard.writeText(t).then(()=>toast('Disalin — tampal ke Google Classroom atau WhatsApp'),()=>toast('Salinan gagal; pilih teks itu secara manual'));
+}
+async function delRecord(id){
+  if(!confirm('Padam rekod calon ini? Tindakan ini tidak boleh dibatalkan.')) return;
+  RECORDS=RECORDS.filter(r=>r.id!==id); await saveRecords(); toast('Rekod dipadam'); go('home');
+}
+
+/* =====================================================================
+   SIMPANAN / PEMULIHAN
+   ===================================================================== */
+function drawSettings(){
+  const el=$('#v-settings');
+  const size=(JSON.stringify(RECORDS).length/1024).toFixed(0);
+  el.innerHTML=`
+  <h2 style="font-size:28px;margin-bottom:6px">Simpanan dan akaun</h2>
+  <p class="hint" style="margin-bottom:20px;max-width:62ch">Pemeriksaan anda disimpan dalam pelayar pada peranti ini. Muat turunnya sebagai fail dan simpan fail itu dalam Google Drive DELIMa — itulah sandaran anda, dan itulah caranya anda memindahkan satu kelas antara telefon dan komputer riba.</p>
+  <div class="two">
+    <div class="card pad">
+      <span class="eyebrow">Rekod anda</span>
+      <h3 style="font-size:19px;margin:8px 0 12px">${RECORDS.length} calon · ${size} KB</h3>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" id="dl">Muat turun sandaran (.json)</button>
+        <button class="btn ghost" id="csv">Eksport markah (.csv)</button>
+        <label class="btn ghost" style="cursor:pointer">Pulihkan daripada fail<input type="file" accept=".json" hidden id="up"></label>
+      </div>
+      <p class="hint" style="margin-top:14px">Pemulihan menggabungkan fail itu dengan rekod sedia ada; rekod yang sama diganti, bukan diduakan.</p>
+    </div>
+    <div class="card pad">
+      <span class="eyebrow">Log masuk sebagai</span>
+      <h3 style="font-size:19px;margin:8px 0 4px">${esc(TEACHER.name)}</h3>
+      <p class="hint" style="margin:0 0 14px">${esc(TEACHER.email)} · ${esc(TEACHER.school)}</p>
+      <button class="btn ghost sm" id="out">Log keluar</button>
+      <p class="hint" style="margin-top:16px">Log keluar membuang nama anda daripada peranti ini. Karangan yang telah diperiksa kekal melainkan anda memadamnya.</p>
+    </div>
+  </div>
+  <div class="card pad" style="margin-top:16px;border-left:5px solid ${engineReady()?'var(--ok)':'var(--merah)'}">
+    <span class="eyebrow">Enjin pemeriksaan</span>
+    <h3 style="font-size:19px;margin:8px 0 10px">${ENGINE==='manual'?'Pemeriksaan sendiri — tiada perkhidmatan diperlukan':(engineReady()?'Sudah disambung':'Belum disambung')}</h3>
+    <p class="hint" style="max-width:68ch">Pilih bagaimana sesebuah karangan dibaca. Pemeriksaan sendiri tidak memerlukan apa-apa: anda memilih peringkat dan markah sendiri berpandukan kriteria, dan aplikasi ini tetap membina profil, analisis kelas dan pelan intervensi.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0">
+      ${[['manual','Periksa sendiri','percuma, luar talian'],['gemini','Google Gemini','peringkat percuma, akaun Google DELIMa'],['claude','Claude','kunci Anthropic']]
+        .map(([v,t,n])=>`<button class="chip" data-eng="${v}" aria-pressed="${ENGINE===v}" style="padding:11px 15px;text-align:left">
+          <b style="display:block;font-size:14px">${t}</b><span style="font-size:11.5px;opacity:.7">${n}</span></button>`).join('')}
+    </div>
+
+    ${ENGINE==='manual'?`<p class="hint" style="max-width:68ch;margin:0">Tiada apa lagi untuk disediakan. Buka satu bahagian, tekan peringkat yang anda berikan, laraskan markah dalam julat peringkat itu, dan tambah nota anda sendiri. Laporan dibina daripada bank intervensi yang dikunci pada aspek yang anda beri paling rendah.</p>`:''}
+
+    ${ENGINE==='gemini'?`
+      <label class="f" style="max-width:480px"><span>Kunci API Google AI Studio</span>
+        <input type="password" id="gkey" placeholder="AIza..." value="${esc(KEYS.gemini||'')}" autocomplete="off"></label>
+      <label class="f" style="max-width:480px"><span>Model</span>
+        <input type="text" id="gmodel" list="gmodels" value="${esc(GMODEL)}">
+        <datalist id="gmodels"></datalist></label>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" id="saveKey">Simpan</button>
+        <button class="btn ghost" id="findModels">Cari model saya</button>
+        <button class="btn ghost" id="testKey">Uji sambungan</button>
+      </div>
+      <p class="hint" style="margin-top:14px">Dapatkan kunci percuma di aistudio.google.com — log masuk dengan akaun Google, kemudian <b>Get API key</b>. Peringkat percuma memadai untuk satu set kelas, dan kunci disimpan dalam pelayar ini sahaja.</p>`:''}
+
+    ${ENGINE==='claude'?`
+      ${IN_ARTIFACT?`<p class="hint" style="max-width:68ch;margin:0">Salinan ini berjalan di dalam Claude, yang membekalkan pemeriksaan. Pada alamat web anda sendiri, anda perlu menampal kunci Anthropic di sini.</p>`:`
+      <label class="f" style="max-width:480px"><span>Kunci API Anthropic</span>
+        <input type="password" id="akey" placeholder="sk-ant-..." value="${esc(KEYS.anthropic||'')}" autocomplete="off"></label>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" id="saveKey">Simpan</button>
+        <button class="btn ghost" id="testKey">Uji sambungan</button>
+      </div>
+      <p class="hint" style="margin-top:14px">Buat satu di console.anthropic.com. Ini API berbayar — satu set karangan kelas hanya beberapa sen, tetapi akaun itu perlu ada kredit.</p>`}`:''}
+
+    ${ENGINE!=='manual'?`<p class="hint" style="margin-top:14px"><b>Jangan sekali-kali menampal kunci ke dalam fail HTML itu sendiri.</b> Apa-apa yang dimuat naik ke repositori GitHub awam boleh dibaca sesiapa sahaja, dan kunci yang bocor akan dibelanjakan oleh orang lain. Setiap guru menambah kuncinya sendiri pada perantinya sendiri.</p>
+    <p class="hint" id="keyMsg" style="margin-top:8px"></p>`:''}
+  </div>
+
+  <div class="two" style="margin-top:16px">
+    <div class="card pad">
+      <span class="eyebrow">Cara pemeriksaan</span>
+      <h3 style="font-size:19px;margin:8px 0 10px">Baca ini sebelum mempercayai sesuatu markah</h3>
+      <ul class="tick" style="max-width:70ch">
+        <li>Pemeriksaan dijalankan secara holistik: peringkat ditentukan dahulu, kemudian markah dalam julat peringkat itu. Skor aspek 1–5 hanyalah alat diagnosis untuk intervensi, bukan markah yang dijumlahkan.</li>
+        <li>Bahagian A dan Bahagian B menggunakan skala yang berlainan. Peringkat Cemerlang bermula pada 26/30 di Bahagian A tetapi 64/70 di Bahagian B, jadi karangan yang sama boleh jatuh pada peringkat berlainan.</li>
+        <li>Tema/Tugasan dinilai atas ketepatan menjawab tugasan sahaja. Karangan berbahasa indah yang tersasar daripada tugasan kehilangan markah di sini, bukan di bawah Bahasa.</li>
+        <li>Ungkapan menarik hanya diberi kredit apabila digunakan dengan tepat. Peribahasa yang tersalah maksud tidak menaikkan peringkat.</li>
+        <li>Ini pendapat kedua, bukan pengganti penyelarasan. Apabila sesuatu markah kelihatan salah pada pandangan anda, markah andalah yang sah — buka panel bukti dan semak kriteria itu sendiri.</li>
+        <li>Tulisan tangan ditranskripsi daripada gambar, jadi semak transkrip apabila sesuatu markah mengejutkan. Satu perkataan yang tersalah baca boleh menjatuhkan satu peringkat.</li>
+      </ul>
+    </div>
+    <div class="card pad">
+      <span class="eyebrow">Tanda pemeriksaan</span>
+      <h3 style="font-size:19px;margin:8px 0 12px">Simbol mengikut skema</h3>
+      <div class="tanda">
+        <b>( )</b><span>Kesalahan isi</span>
+        <b>___</b><span>Kesalahan bahasa, rangkai kata dan perkataan</span>
+        <b>/</b><span>Kesalahan ejaan dan huruf besar (nama khas)</span>
+        <b>//</b><span>Kesalahan ejaan yang berulang</span>
+        <b>⌇</b><span>Kesalahan tanda baca</span>
+      </div>
+      <p class="hint" style="margin-top:14px">Senarai kesalahan dalam setiap laporan menggunakan simbol yang sama, supaya anda boleh menyalinnya terus ke atas skrip calon.</p>
+      <div style="border-top:1px solid var(--line);margin-top:14px;padding-top:12px">
+        <span class="eyebrow">Skema yang dimuatkan</span>
+        <p class="hint" style="margin-top:6px">${esc(SKEMA.rujukan)} — Bahagian A: ${esc(SKEMA.ba.tema)}; Bahagian B: ${SKEMA.bb.map(s=>esc(s.tema)).join(', ')}.</p>
+      </div>
+    </div>
+  </div>`;
+  $('#dl').onclick=()=>{
+    const blob=new Blob([JSON.stringify({app:'tanggaperingkat',v:1,guru:TEACHER,records:RECORDS},null,2)],{type:'application/json'});
+    dlFile(blob,`tangga-peringkat-${new Date().toISOString().slice(0,10)}.json`);
+  };
+  $('#csv').onclick=()=>{
+    const head=['Nama','Kelas','Tarikh','Bhg A markah','Bhg A peringkat','A Tema','A Idea','A Bahasa','A Pengolahan',
+                'Bhg B soalan','Bhg B markah','Bhg B peringkat','B Tema','B Idea','B Bahasa','B Pengolahan','Jumlah /100','Gred'];
+    const rows=RECORDS.map(r=>{
+      const cells=[r.name,r.klass,r.date.slice(0,10)];
+      const A=r.parts?.ba, B=r.parts?.bb;
+      cells.push(A?.markah??'',A?pInfo('ba',A.peringkat).nama:'',...ASPEK.map(a=>A?.aspek?.[a.k]??''));
+      cells.push(B?.soalan??'',B?.markah??'',B?pInfo('bb',B.peringkat).nama:'',...ASPEK.map(a=>B?.aspek?.[a.k]??''));
+      cells.push(recTotal(r),gredOf(recTotal(r))[1]);
+      return cells.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',');
+    });
+    dlFile(new Blob([[head.join(','),...rows].join('\n')],{type:'text/csv'}),'markah-bm-kertas1.csv');
+  };
+  $('#up').onchange=e=>{
+    const f=e.target.files[0]; if(!f) return;
+    const fr=new FileReader();
+    fr.onload=async()=>{
+      try{
+        const d=JSON.parse(fr.result);
+        if(!Array.isArray(d.records)) throw new Error('bukan sandaran');
+        const ids=new Set(d.records.map(r=>r.id));
+        RECORDS=[...RECORDS.filter(r=>!ids.has(r.id)),...d.records];
+        await saveRecords(); toast(`${d.records.length} rekod dipulihkan`); drawSettings();
+      }catch(err){ toast('Fail itu bukan sandaran Tangga Peringkat'); }
+    };
+    fr.readAsText(f);
+  };
+  $$('[data-eng]').forEach(btn=>btn.onclick=async()=>{
+    ENGINE=btn.dataset.eng; await saveEngine(); drawSettings();
+    toast(ENGINE==='manual'?'Ditukar kepada pemeriksaan sendiri':'Tambah kunci di bawah untuk melengkapkan tetapan ini');
+  });
+  const readKeys=()=>{ if($('#gkey')) KEYS.gemini=$('#gkey').value.trim();
+                       if($('#akey')) KEYS.anthropic=$('#akey').value.trim();
+                       if($('#gmodel')) GMODEL=$('#gmodel').value.trim()||GMODEL; };
+  if($('#saveKey')) $('#saveKey').onclick=async()=>{ readKeys(); await saveEngine(); drawSettings(); toast('Disimpan pada peranti ini'); };
+  if($('#findModels')) $('#findModels').onclick=async()=>{
+    readKeys(); const msg=$('#keyMsg');
+    if(!KEYS.gemini) return toast('Tampal kunci dahulu');
+    msg.innerHTML='<span class="mono">Bertanya kepada Google model mana yang boleh digunakan…</span>';
+    try{
+      const list=await listGeminiModels();
+      $('#gmodels').innerHTML=list.map(m=>`<option value="${esc(m)}">`).join('');
+      const flash=list.find(m=>/flash/.test(m)&&!/lite|preview/.test(m))||list[0];
+      if(flash){ $('#gmodel').value=flash; GMODEL=flash; await saveEngine(); }
+      msg.innerHTML=`<b style="color:var(--ok)">${list.length} model tersedia.</b> Menggunakan <span class="mono">${esc(GMODEL)}</span> — tekan kotak model untuk melihat yang lain.`;
+    }catch(e){ msg.innerHTML='<b style="color:#a81c28">'+esc(e.message==='BAD_KEY'?'Kunci itu ditolak oleh Google.':e.message)+'</b>'; }
+  };
+  if($('#testKey')) $('#testKey').onclick=async()=>{
+    readKeys(); const msg=$('#keyMsg');
+    msg.innerHTML='<span class="mono">Menguji…</span>';
+    try{
+      await callAI([{type:'text',text:'Balas dengan JSON ini sahaja dan tiada yang lain: {"ok":true}'}],200);
+      await saveEngine();
+      msg.innerHTML='<b style="color:var(--ok)">Sudah bersambung. Pemeriksaan boleh dijalankan.</b>';
+    }catch(e){
+      msg.innerHTML='<b style="color:#a81c28">'+esc(
+        e.message==='BAD_KEY'?'Kunci ditolak — pastikan ia disalin sepenuhnya dan akaun masih aktif.':
+        e.message==='NO_REACH'?'Perkhidmatan tidak dapat dihubungi daripada rangkaian ini.':
+        e.message==='NO_KEY'?'Tampal kunci dahulu.':e.message)+'</b>';
+    }
+  };
+  $('#out').onclick=async()=>{ await store.set(K_T,null); TEACHER=null; location.reload(); };
+}
+async function saveEngine(){ await store.set(K_E,{engine:ENGINE,keys:KEYS,model:GMODEL}); }
+
+function dlFile(blob,name){
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1500); toast('Disimpan dalam muat turun — pindahkan ke Drive');
+}
+
+/* =====================================================================
+   KARANGAN CONTOH PERINGKAT CEMERLANG
+   ===================================================================== */
+function sampleBlock(b){
+  const rec=CURRENT.parts[b.key]||{};
+  const contoh=rec.contoh;
+  if(!contoh) return `<div class="card pad" style="background:linear-gradient(120deg,rgba(201,138,16,.12),rgba(60,42,134,.07));border:1px dashed #cdc6e6">
+    <span class="eyebrow">Karangan contoh</span>
+    <h3 style="font-size:19px;margin:8px 0 6px">Karangan peringkat Cemerlang untuk soalan ini</h3>
+    <p class="hint" style="max-width:66ch;margin-bottom:12px">Ditulis daripada tugasan itu sendiri, pada tahap yang dituntut oleh peringkat Cemerlang ${b.pendek} — bukan lebih tinggi, supaya kelas benar-benar boleh meniru caranya. Murid mendapat rangka karangan itu dan ungkapan yang berbaloi dipelajari.</p>
+    <button class="btn sm" id="mkSample" style="background:${b.colour}">Tulis karangan contoh</button>
+    ${ENGINE==='manual'?`<p class="hint" style="margin-top:10px">Yang ini memerlukan enjin pemeriksaan — ia menulis, bukan memberi markah. Tukar kepada Gemini atau Claude di Simpanan.</p>`:''}
+  </div>`;
+  return `<div class="card pad" style="border-top:4px solid ${b.colour}">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <div style="margin-right:auto"><span class="eyebrow">Karangan contoh · peringkat Cemerlang</span>
+      <h3 style="font-size:19px;margin:6px 0 0">${esc(contoh.tajuk||b.pendek)}</h3></div>
+      <button class="btn ghost sm" id="mkSample">Tulis semula</button>
+    </div>
+    ${modelCard(b,contoh,0)}
+  </div>`;
+}
+function modelCard(b,x,i){
+  return `<div style="margin-top:16px;border-top:1px solid var(--line);padding-top:16px">
+    ${x.tugasan?`<p class="hint" style="margin:0 0 10px">${esc(x.tugasan)}</p>`:''}
+    ${(x.rangka||[]).length?`<div class="quote" style="border-color:${b.colour}"><b>Rangka karangan:</b> ${x.rangka.map(t=>esc(t)).join(' → ')}</div>`:''}
+    <div style="background:#fbfaff;border:1px solid var(--line);border-radius:14px;padding:16px;white-space:pre-wrap;line-height:1.85;font-size:15px" id="contoh-${b.key}-${i}">${esc(x.karangan||'')}</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+      <span class="pill" style="background:var(--paper)">${x.jumlahPerkataan||'—'} patah perkataan</span>
+      <button class="btn ghost sm" data-copy="contoh-${b.key}-${i}">Salin</button>
+    </div>
+    <div style="margin-top:12px">
+      ${ASPEK.map(a=>`<details class="accordion"><summary><span style="width:9px;height:9px;border-radius:3px;background:${a.c};display:inline-block"></span>Mengapa ini Cemerlang bagi ${a.nama}</summary>
+        <div class="body">${esc(x.mengapa?.[a.k]||'—')}</div></details>`).join('')}
+    </div>
+    ${(x.ungkapan||[]).length?`<div style="margin-top:10px"><span class="eyebrow">Ungkapan berbaloi dipelajari</span>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">${x.ungkapan.map(f=>`<span class="pill" style="background:var(--paper);font-size:13px;padding:7px 12px" title="${esc(f.guna||'')}">${esc(f.ungkapan||f)}</span>`).join('')}</div></div>`:''}
+  </div>`;
+}
+function wireSample(b){
+  if($('#mkSample')) $('#mkSample').onclick=()=>makeSample(b);
+  $$('[data-copy]').forEach(x=>x.onclick=()=>{
+    const t=$('#'+x.dataset.copy)?.innerText||'';
+    navigator.clipboard.writeText(t).then(()=>toast('Disalin'),()=>toast('Pilih teks itu untuk menyalinnya'));
+  });
+}
+async function makeSample(b){
+  const zone=$('#sampleZone');
+  zone.innerHTML=`<div class="working"><div class="spin" style="border-color:rgba(27,22,49,.2);border-top-color:${b.colour}"></div>
+    <div><b>Menulis karangan contoh…</b><div class="hint">Menyasarkan peringkat Cemerlang pada skala ${b.pendek} — tidak lebih tinggi, supaya kelas boleh meniru caranya.</div></div></div>`;
+
+  const info=PERINGKAT[b.key][0];
+  const prompt=`Anda ialah pemeriksa kanan Bahasa Melayu SPM yang menulis karangan contoh untuk kegunaan kelas — Kertas 1103/1, ${b.label} (${b.tugas}, ${b.panjang}, ${b.max} markah).
+
+TUGASAN:
+${tugasanTeks(b)}
+
+${skalaTeks(b.key)}
+
+${PERATURAN}
+
+${KONTEKS}
+
+Tulis satu karangan yang layak diberikan markah ${info.sub[0][0]}–${info.sub[0][1]} (peringkat Cemerlang, julat atas) pada skala ${b.pendek}.
+
+Peraturan tegas:
+- Jawab tugasan yang sebenar. Liputi setiap kehendak tugasan.
+- Capai panjang yang dikehendaki bahagian ini (${b.panjang}). Jangan berlebihan.
+- Gunakan bahasa Melayu baku, ejaan mengikut Sistem Ejaan Rumi Baharu, pelbagai jenis ayat, dan sekurang-kurangnya dua ungkapan menarik (peribahasa, cogan kata, kata hikmat atau pantun) yang benar-benar tepat maksudnya.
+- Gunakan contoh dan latar Malaysia yang boleh dikenali oleh murid Tingkatan 5.
+- Jangan gunakan kosa kata yang mustahil dihasilkan calon dalam keadaan peperiksaan.
+- Wacana lengkap: pendahuluan, isi berperenggan dengan huraian dan contoh, dan penutup.
+- Dalam "mengapa", petik frasa sebenar daripada karangan anda yang memenuhi kriteria itu, dan namakan kriteria tersebut.
+
+Balas dengan JSON sahaja:
+{"tajuk":"tajuk atau tugasan karangan ini","tugasan":"satu baris tentang apa yang dikehendaki","rangka":["3-5 titik rangka yang diikuti karangan ini"],"karangan":"karangan penuh, \\n antara perenggan","jumlahPerkataan":<nombor>,"mengapa":{"tema":"...","idea":"...","bahasa":"...","pengolahan":"..."},"ungkapan":[{"ungkapan":"...","guna":"bila murid boleh menggunakannya"}]}`;
+
+  const content=[{type:'text',text:prompt}];
+  imgBlocks(SHOTS[b.key].q,'KERTAS SOALAN:').forEach(x=>content.push(x));
+  try{
+    const out=await callAI(content, 3500);
+    CURRENT.parts[b.key]={...(CURRENT.parts[b.key]||{}), contoh:out};
+    drawPart(b); toast('Karangan contoh sedia — kelas boleh mengkajinya');
+  }catch(e){
+    zone.innerHTML=failureCard(e)+`<div style="margin-top:10px"><button class="btn ghost sm" onclick="drawPart(BAHAGIAN[STEP-1])">Kembali</button></div>`;
+  }
+}
+
+/* =====================================================================
+   PEMERIKSAAN SENDIRI — grid peringkat
+   ===================================================================== */
+function kriteriaFor(bhgKey,peringkat,aspek){
+  const k=KRITERIA[bhgKey]?.[peringkat]; return k?k[aspek]:'—';
+}
+function handPanel(b){
+  const cur=CURRENT.parts[b.key]||{};
+  const pk=cur.peringkat||null;
+  const info=pk?pInfo(b.key,pk):null;
+  return `<details class="accordion" style="margin-top:18px" ${ENGINE==='manual'||cur.diperiksaSendiri?'open':''}>
+    <summary style="border-left:4px solid ${b.colour}">${ENGINE==='manual'?'Berikan peringkat dan markah':'Laraskan peringkat dan markah sendiri'} — ${b.pendek}</summary>
+    <div class="body">
+      <p class="hint" style="margin:0 0 14px">Baca karangan sekali sepenuhnya, tekan peringkat yang paling menggambarkannya, kemudian pilih markah dalam julat peringkat itu. Kriteria di bawah ialah kriteria yang anda berikan.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
+        ${PERINGKAT[b.key].map(p=>`<button class="chip" data-pk="${p.k}" aria-pressed="${pk===p.k}" style="${pk===p.k?'background:'+p.c+';border-color:'+p.c+';color:#fff':''}">
+          ${p.nama==='Tidak Mencapai Tahap Penguasaan Minimum'?'TMTPM':p.nama} <span class="mono" style="font-size:11px;opacity:.75">${p.lo}–${p.hi}</span></button>`).join('')}
+      </div>
+      <div id="pkBody">${pk?handBody(b,pk,cur.markah??info.lo):'<p class="hint">Pilih satu peringkat untuk melihat kriterianya.</p>'}</div>
+      <label class="f" style="margin-top:14px"><span>Nota anda tentang bahagian ini (pilihan)</span>
+        <textarea id="handNote" rows="3" placeholder="Apa yang anda lihat dalam karangan itu — nota ini muncul dalam laporan.">${esc(cur.notaGuru||'')}</textarea></label>
+      <button class="btn sm" id="handSave" style="background:${b.colour}">Simpan markah ini</button>
+    </div></details>`;
+}
+function handBody(b,pk,markah){
+  const info=pInfo(b.key,pk);
+  const m=Math.max(info.lo,Math.min(info.hi,markah));
+  const cur=CURRENT.parts[b.key]||{};
+  return `
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:14px">
+      ${ASPEK.map(a=>`<div style="border:1px solid var(--line);border-radius:12px;padding:12px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="width:9px;height:9px;border-radius:3px;background:${a.c};display:inline-block"></span><b style="font-size:13px">${a.nama}</b></div>
+        <p class="hint" style="margin:0">${esc(kriteriaFor(b.key,pk,a.k))}</p></div>`).join('')}
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <div><span class="eyebrow">Markah</span><div class="big" style="font-size:34px;color:${info.c}" id="hmVal">${m}<small>/${b.max}</small></div></div>
+      <div style="flex:1;min-width:200px">
+        <input type="range" id="hmRange" min="${info.lo}" max="${info.hi}" value="${m}" style="width:100%">
+        <div class="hint" style="display:flex;justify-content:space-between"><span>${info.lo} · julat bawah ${info.sub[1].join('–')}</span><span>julat atas ${info.sub[0].join('–')} · ${info.hi}</span></div>
+      </div>
+    </div>
+    <div style="margin-top:14px">
+      <span class="eyebrow">Laraskan aspek (untuk diagnosis intervensi)</span>
+      ${ASPEK.map(a=>{const v=cur.aspek?.[a.k]??ASPEK_LALAI[b.key][pk];
+        return `<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px">
+        <b style="font-size:13px;min-width:120px">${a.nama}</b>
+        <div style="display:flex;gap:5px">${[1,2,3,4,5].map(n=>
+          `<button class="chip aspekbtn" data-aspek="${a.k}:${n}" aria-pressed="${v===n}" style="width:36px;text-align:center;font-family:var(--mono);font-weight:600;${v===n?'background:'+a.c+';border-color:'+a.c+';color:#fff':''}">${n}</button>`).join('')}</div>
+      </div>`}).join('')}
+    </div>`;
+}
+function wireHand(b){
+  const cur=CURRENT.parts[b.key]||{};
+  const state={peringkat:cur.peringkat||null, markah:cur.markah??null, aspek:{...(cur.aspek||{})}};
+
+  const wireBody=()=>{
+    const rng=$('#hmRange');
+    if(rng) rng.oninput=e=>{ state.markah=+e.target.value;
+      const info=pInfo(b.key,state.peringkat);
+      $('#hmVal').innerHTML=`${state.markah}<small>/${b.max}</small>`;
+      $('#hmVal').style.color=info.c; };
+    $$('.aspekbtn').forEach(x=>x.onclick=ev=>{
+      ev.preventDefault();
+      const [k,n]=x.dataset.aspek.split(':'); state.aspek[k]=+n;
+      const a=ASPEK.find(a=>a.k===k);
+      $$(`[data-aspek^="${k}:"]`).forEach(o=>{
+        const on=o.dataset.aspek===x.dataset.aspek;
+        o.setAttribute('aria-pressed',String(on));
+        o.style.cssText=`width:36px;text-align:center;font-family:var(--mono);font-weight:600;`+(on?`background:${a.c};border-color:${a.c};color:#fff`:'');
+      });
+    });
+  };
+  wireBody();
+
+  $$('[data-pk]').forEach(x=>x.onclick=ev=>{
+    ev.preventDefault();
+    const pk=x.dataset.pk; state.peringkat=pk;
+    const info=pInfo(b.key,pk);
+    state.markah=Math.max(info.lo,Math.min(info.hi,state.markah??info.lo));
+    ASPEK.forEach(a=>{ if(state.aspek[a.k]==null) state.aspek[a.k]=ASPEK_LALAI[b.key][pk]; });
+    $$('[data-pk]').forEach(o=>{
+      const on=o.dataset.pk===pk, p=pInfo(b.key,o.dataset.pk);
+      o.setAttribute('aria-pressed',String(on));
+      o.style.cssText=on?`background:${p.c};border-color:${p.c};color:#fff`:'';
+    });
+    $('#pkBody').innerHTML=handBody(b,pk,state.markah);
+    wireBody();
+  });
+
+  if($('#handSave')) $('#handSave').onclick=()=>{
+    if(!state.peringkat) return toast('Pilih peringkat dahulu');
+    const info=pInfo(b.key,state.peringkat);
+    const aspek={}; ASPEK.forEach(a=>aspek[a.k]=state.aspek[a.k]??ASPEK_LALAI[b.key][state.peringkat]);
+    const prev=CURRENT.parts[b.key]||{};
+    CURRENT.parts[b.key]={...prev,peringkat:state.peringkat,
+      markah:Math.max(info.lo,Math.min(info.hi,state.markah??info.lo)),
+      aspek,diperiksaSendiri:true,notaGuru:$('#handNote').value.trim(),
+      tugasanDibaca:prev.tugasanDibaca||'Diperiksa sendiri oleh guru.'};
+    if(b.key==='bb') CURRENT.parts.bb.soalan=CURRENT.soalanB;
+    drawPart(b); toast(`${b.pendek}: ${CURRENT.parts[b.key].markah}/${b.max} direkodkan`);
+  };
+}
+
+/* =====================================================================
+   INTERVENSI TANPA AI — dibina daripada aspek paling lemah
+   ===================================================================== */
+const LIB={
+ tema:{kata:['berdasarkan tugasan','oleh itu','sehubungan dengan itu','jelaslah bahawa','kesimpulannya'],
+  rendah:{jurang:'Karangan tidak menjawab apa yang ditanya. Kehendak tugasan tersasar atau hanya sebahagian dijawab.',
+   sasaran:'Setiap kehendak tugasan dijawab mengikut urutan, satu isi satu perenggan.',
+   akt:['Gariskan kata kunci tugasan (usaha / kesan / faktor / manfaat) dan tulis semula tugasan itu dengan ayat sendiri sebelum mengarang.',
+    'Beri tiga soalan lampau; minta rangka sahaja — isi bernombor, bukan karangan. Dua minit setiap satu.',
+    'Tukar karangan dengan rakan: bolehkah rakan menemui semua isi yang dikehendaki? Jika tidak, penulis menambah yang tertinggal.',
+    'Tulis semula perenggan paling lemah minggu lalu supaya benar-benar menjawab tugasan.']},
+  sederhana:{jurang:'Isi ada tetapi ada satu kehendak tugasan dijawab sambil lalu sahaja.',
+   sasaran:'Semua isi menepati tugasan dan setiap satu dihuraikan dengan sebab.',
+   akt:['Latihan Isi–Huraian–Contoh: setiap ayat isi disambung dengan "hal ini kerana…" dan "sebagai contoh…".',
+    'Tulis semula satu perenggan lemah dalam 10 minit, menambah sebab pada setiap dakwaan.',
+    'Baca karangan peringkat Cemerlang dan tandakan di mana huraian bermula bagi setiap isi.']},
+  tinggi:{jurang:'Ketepatan tugasan sudah terkawal; markah yang tinggal hilang kerana isi kecil tertinggal ketika kesuntukan masa.',
+   sasaran:'Semua kehendak tugasan dijawab walaupun dalam lima minit terakhir.',
+   akt:['Karangan berjadual dengan dua minit perancangan wajib sebelum menulis.',
+    'Tabiat senarai semak: tandakan setiap kehendak tugasan pada kertas soalan sebaik sahaja dijawab.']}},
+ idea:{kata:['hal ini kerana','sebagai contoh','tuntasnya','di samping itu','natijahnya','justeru'],
+  rendah:{jurang:'Isi disenaraikan tanpa huraian. Satu ayat satu isi, kemudian terus ke isi berikutnya.',
+   sasaran:'Setiap isi dihuraikan dengan sebab dan disokong satu contoh yang boleh dibayangkan pembaca.',
+   akt:['Latihan tiga ayat: ayat isi, ayat sebab, ayat contoh. Buat lima kali sehari selama seminggu.',
+    'Bank contoh: kumpulkan contoh sebenar (nama agensi, program, tempat) mengikut tema untuk digunakan dalam karangan.',
+    'Ambil satu isi daripada skema dan kembangkannya menjadi satu perenggan penuh dalam 10 minit.']},
+  sederhana:{jurang:'Huraian ada tetapi masih umum — contoh tidak khusus dan tidak menguatkan isi.',
+   sasaran:'Contoh yang khusus dan matang, bukan contoh umum yang boleh dimasukkan ke dalam mana-mana karangan.',
+   akt:['Naik taraf contoh: tukar "banyak program kerajaan" kepada satu nama program yang sebenar.',
+    'Bandingkan dua perenggan — satu dengan contoh khusus, satu tanpa — dan minta kelas menamakan bezanya.',
+    'Setiap karangan mesti mengandungi sekurang-kurangnya dua contoh yang boleh disemak kebenarannya.']},
+  tinggi:{jurang:'Idea sudah matang; yang tinggal ialah kedalaman huraian pada isi terakhir yang biasanya tergesa-gesa.',
+   sasaran:'Isi terakhir sama kuatnya dengan isi pertama.',
+   akt:['Tulis perenggan terakhir dahulu, kemudian barulah perenggan lain.','Semak kendiri: kira bilangan ayat setiap perenggan — jurang lebih tiga ayat bermakna ada isi yang tergesa.']}},
+ bahasa:{kata:['walaupun','namun begitu','oleh sebab itu','tambahan pula','seandainya','bak kata pepatah'],
+  rendah:{jurang:'Kesalahan tatabahasa berulang — imbuhan, kata sendi, dan struktur ayat — yang melambatkan pembaca. Ejaan tersasar daripada Sistem Ejaan Rumi Baharu.',
+   sasaran:'Ayat mudah yang betul sepenuhnya, dan kesalahan berulang dibetulkan sebaik dilihat.',
+   akt:['Buku log kesalahan: satu halaman, tiga lajur — apa yang saya tulis, apa yang betul, rumusnya. Ditambah selepas setiap karangan.',
+    'Latihan imbuhan meN- dan di- sepuluh ayat, dibina daripada kesalahan calon itu sendiri, bukan daripada buku teks.',
+    'Imlak enam ayat pendek dua kali seminggu, disemak berpasangan.',
+    'Kembangkan ayat: mula dengan "Saya ke kedai", tambah bila, mengapa dan dengan siapa.']},
+  sederhana:{jurang:'Tatabahasa asas terkawal tetapi ayat kekal pendek dan jenis ayat tidak pelbagai.',
+   sasaran:'Ayat majmuk yang betul — walaupun, kerana, yang, sekiranya — dan kosa kata yang lebih tepat.',
+   akt:['Gabungkan ayat: cantumkan setiap dua ayat pendek dengan walaupun, kerana, yang atau setelah.',
+    'Naik taraf lima perkataan setiap karangan: gembira → teruja, besar → ketara — tetapi hanya jika masih berbunyi asli.',
+    'Kutip tiga ungkapan daripada karangan contoh ke dalam bank kata untuk minggu hadapan.']},
+  tinggi:{jurang:'Kepelbagaian bahasa sudah baik; ketepatan di bawah tekanan masa dan ketepatan maksud peribahasa yang menahan peringkat terakhir.',
+   sasaran:'Ayat majmuk kekal betul dalam karangan berjadual, dan setiap ungkapan menarik benar-benar tepat maksudnya.',
+   akt:['Karangan 350 patah perkataan berjadual, kemudian semak kendiri 10 minit dengan buku log kesalahan terbuka.',
+    'Ujian maksud peribahasa: tulis maksud lima peribahasa yang biasa digunakan sebelum dibenarkan memakainya dalam karangan.']}},
+ pengolahan:{kata:['pada permulaannya','selain itu','seterusnya','sehubungan dengan itu','kesimpulannya','konklusinya'],
+  rendah:{jurang:'Karangan bergerak tanpa perenggan yang jelas. Idea datang mengikut urutan ia terfikir, disambung dengan "dan" atau koma.',
+   sasaran:'Perenggan yang jelas, noktah di tempat yang betul, dan penanda wacana membuka setiap idea baharu.',
+   akt:['Potong satu perenggan panjang kepada ayat yang betul dengan pen merah — tanda baca sahaja, tanpa menulis semula.',
+    'Rangka tiga perenggan: pendahuluan, dua isi, penutup. Isikan dengan satu ayat dahulu.',
+    'Bank penanda wacana di dinding kelas; setiap karangan mesti menggunakan tiga yang berlainan, tidak berulang.']},
+  sederhana:{jurang:'Perenggan ada dan penanda wacana digunakan, tetapi dua tiga penanda yang sama berulang dan kesinambungan antara perenggan longgar.',
+   sasaran:'Kepelbagaian penanda wacana dan kesinambungan idea yang jelas antara perenggan.',
+   akt:['Haramkan "selain itu" untuk satu karangan. Kelas mencari gantinya dahulu.',
+    'Latihan kata ganti: tulis semula perenggan dengan menggantikan kata nama berulang dengan "hal ini", "ia", "keadaan tersebut".',
+    'Beri karangan contoh yang dikocak; kelas menyusunnya semula dan menerangkan kata mana yang memberi petunjuk urutan.']},
+  tinggi:{jurang:'Pengolahan kukuh; yang kurang ialah bentuk — perenggan yang membina, bukan sekadar menyenarai.',
+   sasaran:'Penutup yang menjawab pendahuluan, dan penanda wacana digunakan untuk kesan, bukan hiasan.',
+   akt:['Tulis semula perenggan penutup supaya bergema dengan ayat pertama pendahuluan.','Tandakan penanda wacana dalam karangan contoh dan kira bilangannya setiap perenggan.']}}
+};
+function levelOf(v){ return v<=2?'rendah':v<=3.5?'sederhana':'tinggi'; }
+
+function localReport(rec){
+  const marked=BAHAGIAN.filter(b=>rec.parts?.[b.key]?.markah!=null);
+  const per=ASPEK.map(a=>({...a, v:aspekAvg(rec,a.k)})).sort((a,b)=>a.v-b.v);
+  const lemah=per[0], kedua=per[1], terbaik=per[per.length-1];
+  const total=recTotal(rec), g=gredOf(total);
+  const L=k=>LIB[k.k][levelOf(k.v)];
+  const notes=marked.map(b=>rec.parts[b.key].notaGuru).filter(Boolean);
+  const w=L(lemah), k2=L(kedua);
+
+  const keutamaan=[lemah,kedua].map(c=>({
+    aspek:c.nama, jurang:L(c).jurang, sasaran:L(c).sasaran,
+    mengapa:`Purata ${r1(c.v)} daripada 5 pada kedua-dua bahagian — paling rendah antara empat aspek, jadi satu peringkat yang dinaikkan di sini mengangkat kedua-dua bahagian sekali gus.`
+  }));
+  const lemahBhg=marked.map(b=>({b,p:rec.parts[b.key].markah/b.max})).sort((a,b)=>a.p-b.p)[0];
+  keutamaan.push({aspek:'Merentas kertas',
+    jurang:`${lemahBhg.b.pendek} ialah bahagian paling lemah (${rec.parts[lemahBhg.b.key].markah}/${lemahBhg.b.max}, ${pInfo(lemahBhg.b.key,rec.parts[lemahBhg.b.key].peringkat).nama}).`,
+    sasaran:`Satu karangan ${lemahBhg.b.pendek} berjadual setiap minggu sehingga ia tidak lagi menjadi bahagian paling lemah.`,
+    mengapa:'Bahagian B membawa 70 daripada 100 markah — di situlah calon lemah kehilangan markah paling banyak.'});
+
+  const pelan=[
+    {minggu:'Minggu 1',fokus:lemah.nama+' — bina tabiat',aktiviti:w.akt.slice(0,2),semakan:'Tugasan yang sama diulang pada hujung minggu menunjukkan tabiat itu tanpa perlu diingatkan.'},
+    {minggu:'Minggu 2',fokus:lemah.nama+' ke '+kedua.nama,aktiviti:[w.akt[2]||w.akt[0],k2.akt[0]],semakan:'Semakan rakan sebaya pada dua aspek itu sahaja, berpandukan kriteria skema.'},
+    {minggu:'Minggu 3',fokus:'Masukkan semula ke dalam karangan penuh',aktiviti:[k2.akt[1]||k2.akt[0],`Satu karangan ${lemahBhg.b.pendek} berjadual dalam keadaan peperiksaan, kemudian semak kendiri berpandukan kriteria peringkat.`],semakan:'Periksa semula dengan grid yang sama — cari kenaikan satu peringkat pada '+lemah.nama+'.'}
+  ];
+  return {
+    diagnosis:`${rec.name} memperoleh ${total} daripada 100 (gred ${g[1]}). ${terbaik.nama} ialah aspek paling kukuh pada ${r1(terbaik.v)} daripada 5, jadi ada asas untuk dibina. ${lemah.nama} pula yang menarik markah ke bawah pada ${r1(lemah.v)} daripada 5, dan ia berulang pada kedua-dua bahagian, bukan tersasar pada satu bahagian sahaja. ${lemahBhg.b.pendek} ialah bahagian paling lemah${notes.length?' — nota anda sendiri: "'+notes[0]+'"':''}. Baiki ${lemah.nama.toLowerCase()} dahulu: itu peringkat yang paling murah diperoleh dan ia mengangkat kedua-dua bahagian serentak.`,
+    keutamaan, pelan,
+    latihTubi:{tajuk:`Tulis semula satu perenggan untuk ${lemah.nama.toLowerCase()}`,
+      arahan:`Ambil perenggan paling lemah daripada karangan ${lemahBhg.b.pendek} anda dan tulis semula. Jangan tukar topiknya. ${w.sasaran} Hantar kedua-dua versi, yang lama di sebelah kiri, yang baharu di sebelah kanan.`,
+      kriteriaBerjaya:[w.sasaran,'Versi baharu bukan lebih panjang — ia lebih jelas.','Setiap perubahan boleh dijelaskan dengan satu ayat secara lisan.']},
+    kepadaMurid:`Kamu memperoleh ${total} daripada 100, gred ${g[1]}. Bahagian paling baik ialah ${terbaik.nama.toLowerCase()} — itu sudah berjalan, jadi teruskan. Satu perkara yang perlu diubah sekarang ialah ${lemah.nama.toLowerCase()}: ${w.sasaran.toLowerCase()} Jangan cuba membaiki semuanya sekali gus. Fokus pada satu perkara ini selama dua minggu dan markah kamu akan bergerak.`,
+    bankKata:LIB[lemah.k].kata,
+    dibina:'sendiri'
+  };
+}
+
+/* =====================================================================
+   LATIHAN DARIPADA KARANGAN CALON INI SENDIRI
+   ===================================================================== */
+async function makeExercises(rec){
+  const marked=BAHAGIAN.filter(b=>rec.parts?.[b.key]?.markah!=null);
+  const w=weakestOf(rec);
+  const detail=marked.map(b=>{
+    const o=rec.parts[b.key];
+    return `${b.label} — ${o.markah}/${b.max} (${pInfo(b.key,o.peringkat).nama}). Aspek: Tema ${o.aspek?.tema}, Idea ${o.aspek?.idea}, Bahasa ${o.aspek?.bahasa}, Pengolahan ${o.aspek?.pengolahan}.
+${o.transkrip?'Apa yang ditulis calon: "'+o.transkrip.slice(0,900)+'"':''}
+${(o.kesalahan||[]).length?'Kesalahan yang sudah dikesan: '+o.kesalahan.map(e=>`"${e.tulis}" → "${e.betul}"${e.berulang?' (berulang)':''}`).join('; '):''}
+${o.notaGuru?'Nota guru: '+o.notaGuru:''}`;
+  }).join('\n\n');
+
+  const pr=(rec.report?.keutamaan||[]).map(x=>`${x.aspek}: ${x.jurang} Sasaran: ${x.sasaran}`).join('\n');
+
+  const prompt=`Anda ialah guru Bahasa Melayu SPM yang membina set latihan peribadi untuk seorang calon, di atas kertas atau di skrin, sebaik sahaja karangannya diperiksa.
+
+CALON: ${rec.name}, ${rec.klass||'tiada kelas'} — ${recTotal(rec)}/100, gred ${gredOf(recTotal(rec))[1]}.
+ASPEK PALING LEMAH: ${w.nama}, purata ${r1(w.v)} daripada 5.
+
+${detail}
+
+APA YANG PERLU DIBAIKI MENGIKUT DIAGNOSIS:
+${pr||'(tidak direkodkan)'}
+
+${KONTEKS}
+
+Tulis 6 latihan. Peraturan:
+- Susun daripada paling mudah kepada paling sukar. Latihan pertama mesti sesuatu yang boleh dijayakan calon ini dalam dua minit.
+- Gunakan AYAT CALON SENDIRI sebagai bahan mentah apabila transkrip memberikannya. Petik persis, termasuk kesalahannya, dalam "diberi".
+- Sekurang-kurangnya tiga latihan mesti menyasarkan ${w.nama}. Jangan ditaburkan pada keempat-empat aspek.
+- Latihan terakhir ialah satu tulisan sebenar yang pendek (100-150 patah perkataan) dalam bentuk bahagian yang markahnya paling rendah.
+- Setiap arahan ialah satu perkara sahaja untuk dibuat, dalam bahasa Melayu yang mudah untuk murid Tingkatan 5. Tiada jargon guru, tiada "analisis", tiada "nilaikan".
+- Apabila calon sangat lemah, berikan permulaan ayat dalam "sokongan" supaya dia tidak tercegat di depan baris kosong.
+- "jawapan" ialah jawapan betul kepada latihan anda sendiri, pada tahap yang realistik boleh dicapai calon ini seterusnya — bukan jawapan bergaya.
+
+Balas dengan JSON sahaja:
+{"latihan":[{
+ "jenis":"betulkan|bina|karang",
+ "aspek":"Tema/Tugasan|Idea|Bahasa|Pengolahan",
+ "tajuk":"4-6 patah perkataan",
+ "mengapa":"satu ayat kepada murid tentang apa yang dibaiki dan mengapa ia menjatuhkan markah",
+ "diberi":"ayat calon sendiri atau bahan untuk dikerjakan, atau rentetan kosong",
+ "arahan":"apa yang perlu dibuat, satu ayat",
+ "langkah":["2-3 langkah pendek"],
+ "sokongan":["permulaan ayat, atau tinggalkan"],
+ "kriteria":["2-3 perkara yang mesti ada dalam jawapan, boleh disemak murid sendiri"],
+ "jawapan":"jawapan betul kepada latihan ini"
+}]}`;
+  const out=await callAI([{type:'text',text:prompt}],4000);
+  if(!out.latihan||!out.latihan.length) throw new Error('tiada latihan dikembalikan');
+  rec.report=rec.report||{};
+  rec.report.latihan=out.latihan.slice(0,8);
+  return rec.report.latihan;
+}
+
+function deckFromExercises(rec){
+  return (rec.report?.latihan||[]).map((x,i)=>({
+    id:'lt-'+i, jenis:x.jenis==='betulkan'?'betulkan':(x.jenis==='karang'?'karang':'bina'),
+    tajuk:x.tajuk||'Latihan '+(i+1), diberi:x.diberi||'',
+    panduan:x.mengapa||'', arahan:x.arahan||'',
+    langkah:[...(x.langkah||[]),...((x.sokongan||[]).length?['Mulakan dengan: '+x.sokongan.join('  /  ')]:[])],
+    kriteria:x.kriteria||[], kunci:x.jawapan, jawapan:x.jawapan,
+    aspek:ASPEK.find(a=>(x.aspek||'').toLowerCase().includes(a.k.slice(0,4)))||null,
+    ditulis:true
+  }));
+}
+
+/* =====================================================================
+   BILIK PEMULIHAN
+   ===================================================================== */
+let PRAC=null;
+
+function weakestOf(rec){
+  return ASPEK.map(a=>({...a,v:aspekAvg(rec,a.k)})).sort((a,b)=>a.v-b.v)[0];
+}
+const ARAHAN={
+  tema:{buat:'Tulis semula ayat ini supaya benar-benar menjawab kehendak tugasan.',
+    langkah:['Baca semula kata kunci tugasan.','Kekalkan idea asal kamu.','Tambah bahagian yang menjawab kehendak tugasan itu.'],
+    kriteria:['Kehendak tugasan kelihatan dalam ayat itu','Idea asal masih ada','Tiada maklumat yang tersasar daripada tema']},
+  idea:{buat:'Tambah huraian yang hilang. Tulis semula supaya ayat itu menyatakan APA dan MENGAPA.',
+    langkah:['Kekalkan ayat isi kamu.','Tambah "hal ini kerana" dan habiskan fikiran itu.','Tambah satu contoh yang boleh dibayangkan pembaca.'],
+    kriteria:['Isi masih ada','Ada sebab selepasnya','Satu contoh khusus, bukan contoh umum']},
+  bahasa:{buat:'Tulis semula sebagai satu ayat yang lebih panjang dan betul.',
+    langkah:['Gabungkan dua ayat pendek dengan walaupun, kerana, yang atau setelah.','Semak imbuhan dan kata sendi.','Tukar satu perkataan kabur kepada yang lebih tepat.'],
+    kriteria:['Satu ayat, digabungkan dengan betul','Imbuhan dan kata sendi betul','Satu perkataan dinaik taraf dan masih berbunyi asli']},
+  pengolahan:{buat:'Sambungkan idea ini dengan betul. Mulakan dengan penanda wacana dan hubungkan idea kedua kepada idea pertama.',
+    langkah:['Pilih penanda wacana yang sepadan maknanya: namun begitu, oleh sebab itu, tambahan pula.','Guna "hal ini", "ia" atau "keadaan tersebut" untuk menggantikan kata nama berulang.','Semak noktah — satu idea, satu ayat.'],
+    kriteria:['Penanda wacana yang sepadan maknanya, bukan sekadar "dan"','Satu kata ganti menggantikan kata nama berulang','Noktah dan huruf besar betul']}
+};
+
+function buildDeck(rec){
+  const ditulis=deckFromExercises(rec);
+  if(ditulis.length) return ditulis;
+  const deck=[], w=weakestOf(rec);
+  const marked=BAHAGIAN.filter(b=>rec.parts?.[b.key]?.markah!=null);
+  marked.forEach(b=>{
+    (rec.parts[b.key].kesalahan||[]).slice(0,4).forEach((e,i)=>{
+      if(!e.tulis||!e.betul) return;
+      deck.push({id:`fix-${b.key}-${i}`,jenis:'betulkan',bhg:b,tajuk:`Betulkan kesalahan ${e.jenis||'bahasa'} kamu sendiri`,
+        diberi:e.tulis,kunci:e.betul,
+        panduan:e.berulang?'Kamu melakukan kesalahan ini lebih daripada sekali, jadi ini rumus yang belum dikuasai — bukan tersasar sekali. Kuasainya di sini dan ia berhenti menjatuhkan markah kamu pada kedua-dua bahagian.'
+                          :'Yang ini muncul sekali sahaja. Betulkan, sebut rumusnya kuat-kuat, dan teruskan.',
+        arahan:'Tulis ayat itu dengan betul.'});
+    });
+  });
+  const ins=ARAHAN[w.k];
+  marked.forEach(b=>{
+    const t=rec.parts[b.key].transkrip||'';
+    (t.split(/[.!?]+/).map(x=>x.trim()).filter(x=>x.length>28).sort((a,b)=>b.length-a.length).slice(0,2))
+      .forEach((ayat,i)=>deck.push({id:`up-${b.key}-${i}`,jenis:'bina',bhg:b,aspek:w,
+        tajuk:`${w.nama}: bina semula ayat kamu sendiri`,diberi:ayat,
+        panduan:`Peringkat yang lebih tinggi pada ${b.pendek} menuntut: ${kriteriaFor(b.key,naikPeringkat(b.key,rec.parts[b.key].peringkat),w.k)}`,
+        arahan:ins.buat,langkah:ins.langkah,kriteria:ins.kriteria}));
+  });
+  if(!deck.some(x=>x.jenis==='bina')){
+    const akt=LIB[w.k][levelOf(w.v)].akt.slice(0,2);
+    akt.forEach((a,i)=>deck.push({id:`gen-${i}`,jenis:'bina',aspek:w,
+      tajuk:`${w.nama}: ${levelOf(w.v)==='rendah'?'bina tabiat':'tajamkan'}`,diberi:'',
+      panduan:`Calon ini purata ${r1(w.v)} daripada 5 bagi ${w.nama.toLowerCase()}. Peringkat berikutnya menuntut: ${LIB[w.k][levelOf(w.v)].sasaran}`,
+      arahan:a,langkah:ARAHAN[w.k].langkah,kriteria:ARAHAN[w.k].kriteria}));
+  }
+  const lt=(rec.report&&rec.report.latihTubi)||localReport(rec).latihTubi;
+  if(lt) deck.push({id:'latihtubi',jenis:'karang',aspek:w,tajuk:lt.tajuk,diberi:'',
+    panduan:'Inilah tugasan yang menggerakkan peringkat. Semua di atas hanyalah persediaan untuknya.',
+    arahan:lt.arahan,kriteria:lt.kriteriaBerjaya||[]});
+  return deck.slice(0,12);
+}
+function naikPeringkat(bhgKey,pk){
+  const list=PERINGKAT[bhgKey], i=list.findIndex(p=>p.k===pk);
+  return list[Math.max(0,i-1)].k;
+}
+
+function openPractice(id){
+  const rec=RECORDS.find(r=>r.id===id); if(!rec) return;
+  PRAC={rec,deck:buildDeck(rec),i:0,log:{...(rec.latihan||{})}};
+  if(!PRAC.deck.length){
+    $('#v-practice').innerHTML=`<div class="empty card pad"><b>Belum ada apa-apa untuk dipulihkan</b>
+      Periksa sekurang-kurangnya satu bahagian untuk ${esc(rec.name)} dahulu — latihan dibina daripada ayat dan kesalahan calon itu sendiri.
+      <div style="margin-top:14px"><button class="btn ghost sm" onclick="openReport('${rec.id}')">Kembali ke laporan</button></div></div>`;
+    return go('practice');
+  }
+  drawPractice(); go('practice');
+}
+
+function drawPractice(){
+  const {rec,deck,i,log}=PRAC, it=deck[i], w=weakestOf(rec);
+  const doneN=Object.keys(log).length, prev=log[it.id];
+  const warna=it.bhg?it.bhg.colour:'var(--ungu)';
+  $('#v-practice').innerHTML=`
+  <div class="noprint" style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+    <button class="btn ghost sm" onclick="openReport('${rec.id}')">← Kembali ke laporan</button>
+    <button class="btn ghost sm" onclick="printWorksheet('${rec.id}')">Cetak sebagai lembaran kerja</button>
+    ${ENGINE!=='manual'?`<button class="btn ghost sm" id="regen" style="margin-left:auto">${rec.report?.latihan?'Tulis set baharu':'Tulis latihan untuk calon ini'}</button>`:''}
+  </div>
+  <div class="card" style="overflow:hidden;margin-bottom:16px">
+    <div style="padding:20px 24px;background:linear-gradient(120deg,#1b1631,#3c2a86);color:#fff">
+      <div class="eyebrow" style="color:#c9bff0">Bilik pemulihan · ${esc(rec.name)}</div>
+      <h2 style="font-size:26px;margin:8px 0 6px">Mengusahakan ${w.nama.toLowerCase()}</h2>
+      <p style="margin:0;color:#d8d2f0;font-size:14px">${doneN} daripada ${deck.length} selesai · latihan ${i+1}</p>
+      <div class="meter" style="height:8px;margin-top:12px;background:rgba(255,255,255,.18)"><i style="width:${doneN/deck.length*100}%;background:var(--emas)"></i></div>
+    </div>
+  </div>
+
+  <div class="card pad" style="border-top:4px solid ${warna}">
+    <span class="eyebrow">${it.jenis==='betulkan'?'Betulkan':it.jenis==='bina'?'Bina semula':'Karang semula'}${it.bhg?' · '+it.bhg.pendek:''}</span>
+    <h3 style="font-size:21px;margin:8px 0 10px">${esc(it.tajuk)}</h3>
+    <p class="hint" style="line-height:1.65;margin-bottom:14px">${esc(it.panduan)}</p>
+    ${it.diberi?`<div class="quote" style="border-color:var(--merah);font-size:15px"><b>Kamu menulis:</b> ${esc(it.diberi)}</div>`:''}
+    <p style="font-weight:600;font-size:15px;margin:14px 0 6px">${esc(it.arahan)}</p>
+    ${(it.langkah||[]).length?`<ul class="tick" style="margin-bottom:10px">${it.langkah.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
+    <textarea id="ans" rows="${it.jenis==='karang'?9:3}" placeholder="Tulis jawapan kamu di sini.">${esc(prev?.jawapan||'')}</textarea>
+    ${(it.kriteria||[]).length?`<div style="margin-top:12px"><span class="eyebrow">Ia dikira selesai apabila</span>
+      <ul class="tick">${it.kriteria.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+    <div id="verdict" style="margin-top:14px">${prev?verdictCard(prev):''}</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+      <button class="btn" id="check" style="background:${warna}">Semak jawapan saya</button>
+      ${(it.jenis==='betulkan'||it.jawapan)?`<button class="btn ghost" id="reveal">${it.jenis==='betulkan'?'Tunjukkan pembetulannya':'Tunjukkan satu jawapan yang baik'}</button>`:''}
+      ${i>0?`<button class="btn ghost" id="back">← Sebelumnya</button>`:''}
+      ${i<deck.length-1?`<button class="btn ghost" id="fwd" style="margin-left:auto">Langkau →</button>`
+        :`<button class="btn ghost" id="fin" style="margin-left:auto">Tamat</button>`}
+    </div>
+  </div>`;
+
+  $('#check').onclick=()=>checkItem();
+  if($('#regen')) $('#regen').onclick=async()=>{
+    const b=$('#regen'); b.disabled=true; b.textContent='Sedang menulis…';
+    try{
+      await makeExercises(PRAC.rec);
+      RECORDS=RECORDS.map(r=>r.id===PRAC.rec.id?PRAC.rec:r); await saveRecords();
+      PRAC.deck=buildDeck(PRAC.rec); PRAC.i=0; drawPractice(); toast('Set latihan baharu sedia');
+    }catch(e){ b.disabled=false; b.textContent='Cuba lagi'; toast(e.message==='NO_KEY'?'Sambungkan enjin pemeriksaan dahulu':'Latihan tidak dapat ditulis — '+e.message,4000); }
+  };
+  if($('#reveal')) $('#reveal').onclick=()=>{
+    $('#verdict').innerHTML=`<div class="card pad" style="background:#f4fbf8;border-color:#bfe5d5">
+      <b>${it.jenis==='betulkan'?'Pembetulannya:':'Satu jawapan yang baik:'}</b> <span style="color:var(--ok);font-weight:600">${esc(it.kunci||it.jawapan)}</span>
+      <p class="hint" style="margin:8px 0 0">Salin sekali dengan tangan, kemudian sebut apa yang berubah dengan ayat kamu sendiri. Menyalin tanpa menyebut rumusnya tidak mengajar apa-apa.</p></div>`;
+  };
+  if($('#back')) $('#back').onclick=()=>{PRAC.i--;drawPractice()};
+  if($('#fwd')) $('#fwd').onclick=()=>{PRAC.i++;drawPractice()};
+  if($('#fin')) $('#fin').onclick=()=>finishPractice();
+}
+
+function norm(t){ return (t||'').toLowerCase().replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').trim(); }
+function verdictCard(v){
+  const c=v.ok==='ya'?'var(--ok)':v.ok==='hampir'?'var(--emas)':'var(--merah)';
+  const t=v.ok==='ya'?'Itu berjaya.':v.ok==='hampir'?'Hampir — satu perkara perlu diubah.':'Belum lagi.';
+  return `<div class="card pad" style="border-color:${c}55;background:${c}0f">
+    <b style="color:${c}">${t}</b>
+    <p style="margin:8px 0 0;font-size:14.5px;line-height:1.65">${esc(v.maklumBalas||'')}</p>
+    ${v.lebihBaik?`<div class="quote" style="border-color:${c};margin-top:10px"><b>Satu cara menulisnya:</b> ${esc(v.lebihBaik)}</div>`:''}</div>`;
+}
+
+async function checkItem(){
+  const {deck,i}=PRAC, it=deck[i];
+  const ans=$('#ans').value.trim();
+  if(!ans) return toast('Tulis jawapan kamu dahulu');
+  const V=$('#verdict');
+
+  if(it.jenis==='betulkan'){
+    const ok=norm(ans)===norm(it.kunci);
+    const dekat=!ok && norm(ans).includes(norm(it.kunci).split(' ').slice(-2).join(' '));
+    const v={ok:ok?'ya':dekat?'hampir':'tidak',jawapan:ans,
+      maklumBalas: ok?'Itulah pembetulan yang akan dibuat pemeriksa. Sebut rumusnya kuat-kuat sekali, kemudian teruskan.'
+        : dekat?'Kamu sudah mengubah bahagian yang betul tetapi belum kepada bentuk yang tepat. Lihat imbuhan atau hujung perkataan itu.'
+        : 'Belum menjadi pembetulan. Baca versi kamu dan yang asal bersebelahan — apa bezanya, dan adakah beza itu perkara yang salah tadi?'};
+    if(!ok && ENGINE!=='manual'){
+      try{
+        const j=await callAI([{type:'text',text:`Seorang calon SPM menulis: "${it.diberi}". Versi yang betul ialah: "${it.kunci}". Percubaan murid: "${ans}".
+Adakah percubaan itu bahasa Melayu yang boleh diterima dan membetulkan kesalahan asal? Balas JSON sahaja, dalam bahasa Melayu: {"ok":"ya|hampir|tidak","maklumBalas":"satu atau dua ayat kepada murid, menamakan rumusnya dengan bahasa mudah","lebihBaik":"ayat yang telah dibetulkan"}`}],400);
+        Object.assign(v,{ok:j.ok||v.ok,maklumBalas:j.maklumBalas||v.maklumBalas,lebihBaik:j.lebihBaik});
+      }catch(e){}
+    }
+    return record(v);
+  }
+
+  if(ENGINE==='manual'){
+    return record({ok:'hampir',jawapan:ans,
+      maklumBalas:'Tiada enjin pemeriksaan disambung, jadi semaknya sendiri berpandukan senarai di atas: baca ayat kamu sekali bagi setiap kriteria dan tandakannya hanya jika ia benar-benar ada. Kemudian tunjukkan kepada guru kamu.'});
+  }
+  V.innerHTML=`<div class="working"><div class="spin" style="border-color:rgba(27,22,49,.2);border-top-color:var(--ungu)"></div><div><b>Membaca jawapan kamu…</b></div></div>`;
+  try{
+    const j=await callAI([{type:'text',text:`Anda ialah guru Bahasa Melayu SPM yang memberi maklum balas bagi satu latihan pendek. Bersikap memberi semangat tetapi jujur, dan tulis kepada murid Tingkatan 5 dalam bahasa Melayu yang mudah.
+
+Tugasan yang diberikan: ${it.arahan}
+${it.diberi?'Apa yang murid tulis pada asalnya: "'+it.diberi+'"':''}
+Ia dikira selesai apabila: ${(it.kriteria||[]).join('; ')}
+Percubaan murid: "${ans}"
+
+Nilai berdasarkan kriteria itu sahaja. Jangan menuntut lebih daripada yang diminta tugasan. Balas JSON sahaja:
+{"ok":"ya|hampir|tidak","maklumBalas":"2-3 ayat: apa yang betul, kemudian satu perkara yang perlu diubah. Namakan kriterianya.","lebihBaik":"satu versi contoh bagi ayat murid itu, mengekalkan ideanya sendiri"}`}],700);
+    record({ok:j.ok||'hampir',jawapan:ans,maklumBalas:j.maklumBalas||'',lebihBaik:j.lebihBaik});
+  }catch(e){
+    V.innerHTML=failureCard(e);
+  }
+}
+
+async function record(v){
+  PRAC.log[PRAC.deck[PRAC.i].id]=v;
+  PRAC.rec.latihan=PRAC.log;
+  RECORDS=RECORDS.map(r=>r.id===PRAC.rec.id?PRAC.rec:r);
+  await saveRecords();
+  drawPractice();
+  $('#verdict').innerHTML=verdictCard(v);
+  if($('#verdict').scrollIntoView) $('#verdict').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function finishPractice(){
+  const {rec,deck,log}=PRAC;
+  const done=Object.values(log), baik=done.filter(v=>v.ok==='ya').length;
+  const w=weakestOf(rec);
+  $('#v-practice').innerHTML=`
+  <div class="card pad" style="text-align:center;padding:40px 24px">
+    <div class="big" style="color:var(--ungu)">${baik}<small>/${deck.length}</small></div>
+    <h2 style="font-size:24px;margin:14px 0 8px">${baik>=deck.length*0.7?'Sesi yang baik.':'Berbaloi diulang esok.'}</h2>
+    <p class="hint" style="max-width:54ch;margin:0 auto 20px">${esc(rec.name.split(' ')[0])} menyelesaikan ${done.length} daripada ${deck.length} latihan tentang ${w.nama.toLowerCase()}. ${baik>=deck.length*0.7?'Berikan karangan penuh pula — tabiatnya sudah ada, ia perlu satu karangan untuk membuktikannya.':'Ulang latihan yang bertanda "belum lagi" sebelum meneruskan. Dua latihan yang dibuat betul-betul lebih baik daripada sepuluh yang tergesa-gesa.'}</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn" onclick="PRAC.i=0;drawPractice()">Ulang sekali lagi</button>
+      <button class="btn ghost" onclick="openReport('${rec.id}')">Kembali ke laporan</button>
+      <button class="btn ghost" onclick="printWorksheet('${rec.id}')">Cetak sebagai lembaran kerja</button>
+    </div>
+  </div>`;
+}
+
+/* ---------- versi kertas, untuk kelas tanpa peranti ---------- */
+function printWorksheet(id){
+  const rec=RECORDS.find(r=>r.id===id); if(!rec) return;
+  const deck=buildDeck(rec), w=weakestOf(rec);
+  const win=window.open('','_blank');
+  if(!win) return toast('Benarkan pop-up untuk mencetak lembaran kerja');
+  win.document.write(`<meta charset="utf-8"><title>Lembaran pemulihan — ${esc(rec.name)}</title>
+  <style>body{font-family:Georgia,serif;max-width:720px;margin:36px auto;padding:0 20px;line-height:1.6;color:#111}
+  h1{font-size:22px;margin-bottom:2px} .sub{color:#666;font-size:13px;margin-bottom:22px}
+  .ex{border:1px solid #ccc;border-radius:8px;padding:14px 16px;margin-bottom:16px;page-break-inside:avoid}
+  .g{background:#f4f4f4;padding:8px 10px;border-radius:5px;font-style:italic;margin:8px 0}
+  .lines{border-bottom:1px solid #999;height:26px;margin-top:8px}
+  ul{margin:8px 0 0;padding-left:18px;font-size:14px;color:#444} .k{font-size:12px;color:#666;text-transform:uppercase;letter-spacing:.1em}</style>
+  <h1>Lembaran pemulihan — ${esc(rec.name)}</h1>
+  <div class="sub">${esc(rec.klass||'')} · BM Kertas 1: ${recTotal(rec)}/100 (gred ${gredOf(recTotal(rec))[1]}) · fokus ${esc(w.nama)} · ${new Date().toLocaleDateString('ms-MY')}</div>
+  ${deck.map((it,n)=>`<div class="ex"><div class="k">${n+1} · ${esc(it.jenis==='betulkan'?'Betulkan':it.jenis==='bina'?'Bina semula':'Karang semula')}</div>
+    <b>${esc(it.arahan)}</b>
+    ${it.diberi?`<div class="g">Kamu menulis: ${esc(it.diberi)}</div>`:''}
+    ${(it.langkah||[]).length?`<ul>${it.langkah.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
+    ${Array.from({length:it.jenis==='karang'?14:3}).map(()=>'<div class="lines"></div>').join('')}
+    ${(it.kriteria||[]).length?`<ul><li><b>Ia dikira selesai apabila:</b> ${it.kriteria.map(x=>esc(x)).join('; ')}</li></ul>`:''}</div>`).join('')}
+  ${deck.some(it=>it.jawapan)?`<div style="page-break-before:always"><h1>Skema jawapan — untuk guru</h1>
+    <div class="sub">Jangan serahkan halaman ini kepada murid.</div>
+    ${deck.map((it,n)=>it.jawapan?`<div class="ex"><div class="k">${n+1}</div>${esc(it.jawapan)}</div>`:'').join('')}</div>`:''}
+  <p style="font-size:13px;color:#666">Diperiksa oleh ${esc(TEACHER.name)}, ${esc(TEACHER.school)}.</p>`);
+  win.document.close(); win.focus(); setTimeout(()=>win.print(),400);
+}
+
+boot();
+</script>
